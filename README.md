@@ -16,7 +16,7 @@ Creators and OSS maintainers struggle to secure sustainable, community-backed fu
 
 ---
 
-## PatronFree MVP (Hackathon Scope)
+## PatronFree MVP 
 
 The MVP includes:
 
@@ -27,7 +27,7 @@ The MVP includes:
 
 ---
 
-## Tech Stack (Fastest + Hackable)
+## Tech Stack
 
 **Frontend**
 - React (Vite) or Next.js
