@@ -1,22 +1,24 @@
 # PatronFree
 
-Community-powered funding with transparent accountability for creators.
-
-## Overview
-
-PatronFree is an open-source, community-first funding platform that empowers creators — including open-source maintainers — to receive direct support from their communities.
-
-The platform combines one-click tipping with a democratic Community Grant Pool, where contributors collectively decide which projects should receive pooled funding. PatronFree focuses on transparency, simplicity, and fast deployment — making it ideal for hackathons and real-world iteration.
+PatronFree aims to create a sustainable, community-governed funding ecosystem where creators — from open-source developers to digital builders — can receive transparent, democratic support.
 
 ---
 
 ## Problem
 
-Creators and OSS maintainers struggle to secure sustainable, community-backed funding. Existing platforms are centralized and rarely allow communities to democratically allocate pooled support.
+Creators — including open-source maintainers — struggle to secure sustainable, community-backed funding. Existing platforms are centralized, opaque, and rarely allow communities to democratically allocate pooled support.
 
 ---
 
-## PatronFree MVP 
+## Overview
+
+PatronFree is an open-source, community-first funding platform that enables creators to receive direct support from their communities. It combines one-click tipping with a democratic Community Grant Pool, where contributors collectively decide how pooled funds are allocated.
+
+Designed to be simple, transparent, and hackathon-friendly, PatronFree focuses on fast deployment, clear user flows, and community governance without relying on complex infrastructure.
+
+---
+
+## 🛠️ PatronFree MVP
 
 The MVP includes:
 
@@ -27,32 +29,21 @@ The MVP includes:
 
 ---
 
-## Tech Stack
+## ⚙️ Tech Stack (Fastest + Hackable)
 
 **Frontend**
-- React (Vite) or Next.js
-- Deployed on Vercel
+- React (Vite) or Next.js  
+- Deployed on Vercel  
 
 **Backend / Infra**
-- Firebase Auth (authentication)
-- Firestore (database)
-- Firebase Storage
-- Firebase Functions (optional backend logic)
+- Firebase Auth (authentication)  
+- Firestore (database)  
+- Firebase Storage  
+- Firebase Functions (optional backend logic)  
 
 **Payments**
-- Stripe (test mode) or mocked payment buttons
+- Stripe (test mode) or mocked payment buttons  
 
 **CI/CD**
-- GitHub Actions for basic linting and deploy
+- GitHub Actions for basic linting and deploy  
 
-**License**
-- MIT License  
-- Includes CONTRIBUTING.md
-
----
-
-## Vision
-
-PatronFree aims to create a sustainable, community-governed funding ecosystem where creators — from open-source developers to digital builders — can receive transparent, democratic support.
-
----
