@@ -1,22 +1,16 @@
 # PatronFree
-
-**GitHub-first, trust-focused funding for open-source maintainers and indie builders.**  
-Convert repo visitors into predictable sponsors with per-repo memberships, verifiable metrics, and tamper-evident accounting — hackathon friendly and self-hostable.
-
 ---
 
-## Short tagline
-PatronFree (PatreonJi) is a GitHub-first, community-focused funding layer that helps open-source maintainers and indie builders receive recurring, transparent, and verifiable support — with practical anti-abuse protections and a blockchain-free public ledger.
+PatronFree is a GitHub-first, community-focused funding layer that helps open-source maintainers and indie builders receive recurring, transparent, and verifiable support — with practical anti-abuse protections and a blockchain-free public ledger.
+
+---
+## Overview
+PatronFree is an open-source, GitHub-first platform focused on recurring memberships, repo-centric discovery, corporate sponsorship support, and tamper-evident public financial records — implemented without blockchain. The product centers on reliable subscriptions and structured sponsorship agreements that are discoverable from project READMEs and auditable for sponsors.
 
 ---
 
 ## Problem
 Open-source projects and independent creators need predictable recurring funding and clear accountability. Existing platforms (GitHub Sponsors, Patreon, Open Collective) trade off discoverability, fees, or auditability, and donation/reputation signals can be manipulated by fake accounts (Sybil attacks). There is no single practical service that (a) converts interested users into recurring sponsors, (b) ties money to verifiable contribution evidence, and (c) defends against abuse — all without introducing blockchain/Web3 complexity.
-
----
-
-## Overview
-PatronFree is an open-source, GitHub-first platform focused on recurring memberships, repo-centric discovery, corporate sponsorship support, and tamper-evident public financial records — implemented without blockchain. The product centers on reliable subscriptions and structured sponsorship agreements that are discoverable from project READMEs and auditable for sponsors.
 
 ---
 
