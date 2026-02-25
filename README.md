@@ -108,7 +108,3 @@ MIT (recommended for hackathon) — or choose Apache-2.0 if you prefer explicit 
 Make recurring sponsorship the default for open-source projects by combining repo-first discovery, membership UX, practical anti-abuse protections, and a blockchain-free audit trail so interest converts into sustainable funding while preserving fairness and trust.
 
 ---
-
-## Contributing & Contact
-Contributions welcome — open issues and PRs on the repo. Add `good first issue` labels and follow `CONTRIBUTING.md` for guidelines.
-
