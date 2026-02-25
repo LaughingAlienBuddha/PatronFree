@@ -1,23 +1,23 @@
 # PatronFree
 ---
 
-PatronFree is a GitHub-first, community-focused funding layer that helps open-source maintainers and indie builders receive recurring, transparent, and verifiable support — with practical anti-abuse protections and a blockchain-free public ledger.
+PatronFree is a GitHub first, community focused funding layer that helps open source maintainers and indie builders receive recurring, transparent, and verifiable support with practical anti-abuse protections and a blockchain-free public ledger.
 
 ---
 ## Overview
-PatronFree is an open-source, GitHub-first platform focused on recurring memberships, repo-centric discovery, corporate sponsorship support, and tamper-evident public financial records — implemented without blockchain. The product centers on reliable subscriptions and structured sponsorship agreements that are discoverable from project READMEs and auditable for sponsors.
+PatronFree is an open source, GitHub first platform focused on recurring memberships, repo-centric discovery, corporate sponsorship support, and tamper evident public financial records implemented without blockchain. The product centers on reliable subscriptions and structured sponsorship agreements that are discoverable from project READMEs and auditable for sponsors.
 
 ---
 
 ## Problem
-Open-source projects and independent creators need predictable recurring funding and clear accountability. Existing platforms (GitHub Sponsors, Patreon, Open Collective) trade off discoverability, fees, or auditability, and donation/reputation signals can be manipulated by fake accounts (Sybil attacks). There is no single practical service that (a) converts interested users into recurring sponsors, (b) ties money to verifiable contribution evidence, and (c) defends against abuse — all without introducing blockchain/Web3 complexity.
+Open-source projects and independent creators need predictable recurring funding and clear accountability. Existing platforms (GitHub Sponsors, Patreon, Open Collective) trade off discoverability, fees, or auditability, and donation/reputation signals can be manipulated by fake accounts (Sybil attacks). There is no single practical service that (a) converts interested users into recurring sponsors, (b) ties money to verifiable contribution evidence, and (c) defends against abuse all without introducing blockchain/Web3 complexity.
 
 ---
 
 ## Key goals
-- Increase recurring conversion via repo-first CTAs and membership UX.  
+- Increase recurring conversion via repo first CTAs and membership UX.  
 - Build trust by showing contribution metrics and publishing verifiable ledger entries.  
-- Reduce abuse via GitHub-based reputation and pragmatic anti-Sybil rules.  
+- Reduce abuse via GitHub-based reputation and pragmatic anti Sybil rules.  
 - Offer self-hosting and transparent fee breakdowns so projects control costs and privacy.
 
 ---
@@ -43,7 +43,7 @@ Append-only ledger of subscriptions, sponsorships, escrow events, payouts, and r
 Dockerized deployment for community hosting. Optional Stripe Connect for managed payouts. UI displays exact fee breakdown before payout.
 
 **Moderation & Trust Tools**  
-Flagging, manual review flows, lightweight KYC for high-value payouts, and public moderation logs.
+Flagging, manual review flows, lightweight KYC for high value payouts, and public moderation logs.
 
 **Sybil Protection & Reputation**  
 GitHub link + reputation score (age + contributions). Example rule: verification-eligible when GitHub account age ≥ 30 days or total contributions ≥ 3. Rate limits, CAPTCHA, anomaly detection, and community vouching supplement protections.
@@ -61,7 +61,7 @@ GitHub link + reputation score (age + contributions). Example rule: verification
 ---
 
 ## How the public ledger works (blockchain-free)
-- **Append-only storage:** ledger entries are write-once via DB rules/triggers.  
+- **Append-only storage:** ledger entries are write once via DB rules/triggers.  
 - **Canonical JSON + hash:** each entry serialized deterministically and hashed (SHA-256).  
 - **Server signature:** server signs each hash with a private key; public key is published.  
 - **Public anchoring:** batch hashes committed to a public Git repo (or other public anchor) on a cadence to provide tamper-evident timestamps.  
@@ -70,8 +70,8 @@ GitHub link + reputation score (age + contributions). Example rule: verification
 ---
 
 ## Recommended tech stack
-- **Frontend:** React (Vite) or Next.js — deploy on Vercel.  
-- **Backend / Data:** Firebase Auth + Firestore (append-only collections) or PostgreSQL with write-once triggers. Serverless functions for signing & anchoring.  
+- **Frontend:** React (Vite) or Next.js deploy on Vercel.  
+- **Backend / Data:** Firebase Auth + Firestore (append-only collections) or PostgreSQL with write once triggers. Serverless functions for signing & anchoring.  
 - **Payments:** Stripe (test mode for demo), Stripe Connect for payouts; UPI gateway path for India (Razorpay / Cashfree).  
 - **CI/CD:** GitHub Actions.  
 - **Self-host:** Docker Compose (frontend + backend + DB).  
