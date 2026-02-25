@@ -84,15 +84,6 @@ GitHub link + reputation score (age + contributions). Example rule: verification
 
 ---
 
-## Developer quick start (summary)
-1. Clone the repo.  
-2. Add environment variables (`.env`) for Firebase/DB, Stripe keys, and signing keypair.  
-3. Start frontend & backend (use local emulators or Docker).  
-4. Use Stripe test keys to simulate subscription events that write ledger entries.  
-5. Run the verification script to demonstrate signature verification and public anchoring.
-
----
-
 ## Data & reporting
 - Monthly expense report generation.  
 - One-click CSV/JSON exports of transactions, sponsors, and distributions for transparency and accounting.
@@ -100,7 +91,7 @@ GitHub link + reputation score (age + contributions). Example rule: verification
 ---
 
 ## License
-MIT (recommended for hackathon) — or choose Apache-2.0 if you prefer explicit patent grants.
+MIT License
 
 ---
 
