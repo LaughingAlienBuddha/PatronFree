@@ -1,11 +1,11 @@
-# PatronFree
+# Patronex
 ---
 
-PatronFree is a GitHub first, community focused funding layer that helps open source maintainers and indie builders receive recurring, transparent, and verifiable support with practical anti-abuse protections and a blockchain-free public ledger.
+Patronex is a GitHub first, community focused funding layer that helps open source maintainers and indie builders receive recurring, transparent, and verifiable support with practical anti-abuse protections and a blockchain-free public ledger.
 
 ---
 ## Overview
-PatronFree is an open source, GitHub first platform focused on recurring memberships, repo-centric discovery, corporate sponsorship support, and tamper evident public financial records implemented without blockchain. The product centers on reliable subscriptions and structured sponsorship agreements that are discoverable from project READMEs and auditable for sponsors.
+Patronex is an open source, GitHub first platform focused on recurring memberships, repo-centric discovery, corporate sponsorship support, and tamper evident public financial records implemented without blockchain. The product centers on reliable subscriptions and structured sponsorship agreements that are discoverable from project READMEs and auditable for sponsors.
 
 ---
 
