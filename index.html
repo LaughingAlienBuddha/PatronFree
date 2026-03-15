@@ -255,6 +255,7 @@
 
     <!-- End of headEnd -->
     <style>
+        /* === EXISTING OVERRIDES === */
         #__framer-badge-container { display: none !important; }
         .framer-1hgrmo4-container {
             position: fixed !important;
@@ -286,6 +287,411 @@
             height: 32px;
             width: auto;
         }
+
+        /* ================================================
+           3D CARD CAROUSEL — PREMIUM COVERFLOW
+        ================================================ */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        /* FIX: Proper spacing below navbar */
+        .carousel-section {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            min-height: 700px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            overflow: visible;
+            padding: 100px 0 100px;
+            margin-top: 0;
+            background: linear-gradient(180deg,
+                #ffffff 0%,
+                #f6f7fb 15%,
+                #eceef5 40%,
+                #e4e7f0 70%,
+                #dce0ec 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .carousel-section .section-title {
+            font-size: 48px;
+            font-weight: 700;
+            color: #0a0a0a;
+            margin-bottom: 12px;
+            letter-spacing: -0.035em;
+            text-align: center;
+            line-height: 1.15;
+        }
+
+        .carousel-section .section-subtitle {
+            font-size: 18px;
+            font-weight: 400;
+            color: #555;
+            margin-bottom: 56px;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        /* ---- 3D Stage ---- */
+        .carousel-stage {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .carousel-viewport {
+            width: 100%;
+            height: 460px;
+            perspective: 1400px;
+            perspective-origin: 50% 40%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .carousel-viewport:active { cursor: grabbing; }
+
+        .carousel-track {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        /* Glossy floor surface */
+        .carousel-floor {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 100px;
+            background: radial-gradient(ellipse at center,
+                rgba(108, 58, 245, 0.06) 0%,
+                rgba(108, 58, 245, 0.02) 40%,
+                transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Ambient glow behind center card */
+        .carousel-ambient {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 380px;
+            height: 420px;
+            transform: translate3d(-50%, -55%, 0);
+            background: radial-gradient(ellipse at center,
+                rgba(108, 58, 245, 0.1) 0%,
+                rgba(108, 58, 245, 0.04) 40%,
+                transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(40px);
+            transition: opacity 0.7s ease;
+        }
+
+        /* ---- Card ---- */
+        .cflow-card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 350px;
+            height: 420px;
+            border-radius: 20px;
+            overflow: visible;
+            /* GPU-accelerated smooth transitions */
+            transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1),
+                        opacity 0.7s cubic-bezier(0.25, 1, 0.5, 1),
+                        box-shadow 0.7s cubic-bezier(0.25, 1, 0.5, 1),
+                        filter 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: transform, opacity, box-shadow;
+            transform-style: preserve-3d;
+        }
+
+        .cflow-card .card-inner {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(30px) saturate(1.6);
+            -webkit-backdrop-filter: blur(30px) saturate(1.6);
+            border: 1px solid rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+        }
+
+        /* Floor reflection */
+        .cflow-card::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 5%;
+            width: 90%;
+            height: 60%;
+            background: inherit;
+            border-radius: 20px;
+            transform: scaleY(-1) translateY(-4px);
+            opacity: 0.08;
+            filter: blur(6px);
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 60%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 60%);
+            pointer-events: none;
+            transition: opacity 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .cflow-card .card-img-wrap {
+            width: 100%;
+            height: 210px;
+            overflow: hidden;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .cflow-card .card-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .cflow-card[data-pos="center"]:hover .card-img-wrap img {
+            transform: scale(1.05);
+        }
+
+        .cflow-card .card-body {
+            padding: 22px 24px 24px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .cflow-card .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0a0a0a;
+            margin-bottom: 6px;
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+        }
+
+        .cflow-card .card-desc {
+            font-size: 14px;
+            font-weight: 400;
+            color: #555;
+            line-height: 1.55;
+            margin-bottom: 18px;
+        }
+
+        .cflow-card .card-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 10px 22px;
+            background: linear-gradient(135deg, #6c3af5 0%, #5025d1 100%);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+                        box-shadow 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+            width: fit-content;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(108, 58, 245, 0.25);
+        }
+        .cflow-card .card-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(108, 58, 245, 0.45);
+        }
+        .cflow-card .card-cta svg {
+            width: 14px; height: 14px;
+            transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .cflow-card .card-cta:hover svg {
+            transform: translateX(3px);
+        }
+
+        /* ---- Card Position States (GPU translate3d) ---- */
+        .cflow-card[data-pos="center"] {
+            transform: translate3d(-50%, -50%, 0) rotateY(0deg) scale(1);
+            opacity: 1;
+            z-index: 10;
+            box-shadow: 0 35px 80px rgba(0,0,0,0.14),
+                        0 15px 35px rgba(0,0,0,0.08),
+                        0 5px 15px rgba(0,0,0,0.05);
+        }
+        .cflow-card[data-pos="center"]::after { opacity: 0.12; }
+
+        .cflow-card[data-pos="left"] {
+            transform: translate3d(calc(-50% - 340px), -50%, -150px) rotateY(30deg) scale(0.82);
+            opacity: 0.65;
+            z-index: 5;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            filter: brightness(0.88) saturate(0.9);
+        }
+        .cflow-card[data-pos="left"]::after { opacity: 0.05; }
+
+        .cflow-card[data-pos="right"] {
+            transform: translate3d(calc(-50% + 340px), -50%, -150px) rotateY(-30deg) scale(0.82);
+            opacity: 0.65;
+            z-index: 5;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            filter: brightness(0.88) saturate(0.9);
+        }
+        .cflow-card[data-pos="right"]::after { opacity: 0.05; }
+
+        .cflow-card[data-pos="hidden-left"] {
+            transform: translate3d(calc(-50% - 650px), -50%, -300px) rotateY(50deg) scale(0.55);
+            opacity: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .cflow-card[data-pos="hidden-right"] {
+            transform: translate3d(calc(-50% + 650px), -50%, -300px) rotateY(-50deg) scale(0.55);
+            opacity: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Hover glow on active card */
+        .cflow-card[data-pos="center"] .card-inner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: linear-gradient(135deg,
+                rgba(108, 58, 245, 0.06) 0%,
+                rgba(255, 255, 255, 0) 60%);
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        .cflow-card[data-pos="center"]:hover .card-inner::before {
+            opacity: 1;
+        }
+
+        /* Subtle float on center card */
+        @keyframes cardFloat {
+            0%, 100% { transform: translate3d(-50%, -50%, 0) rotateY(0deg) scale(1) translateY(0); }
+            50%      { transform: translate3d(-50%, -50%, 0) rotateY(0deg) scale(1) translateY(-8px); }
+        }
+        .cflow-card[data-pos="center"] {
+            animation: cardFloat 5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+        }
+
+        /* ---- Navigation ---- */
+        .carousel-nav {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-top: 48px;
+            position: relative;
+            z-index: 5;
+        }
+        .carousel-nav button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .carousel-nav button:hover {
+            background: #fff;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+            transform: scale(1.1);
+        }
+        .carousel-nav button:active {
+            transform: scale(0.95);
+        }
+        .carousel-nav button svg {
+            width: 20px;
+            height: 20px;
+            stroke: #333;
+            stroke-width: 2.4;
+        }
+
+        /* Dots */
+        .carousel-dots {
+            display: flex;
+            gap: 10px;
+            margin: 0 22px;
+        }
+        .carousel-dots .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.12);
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            padding: 0;
+        }
+        .carousel-dots .dot.active {
+            background: #6c3af5;
+            transform: scale(1.35);
+            box-shadow: 0 0 8px rgba(108, 58, 245, 0.4);
+        }
+        .carousel-dots .dot:hover:not(.active) {
+            background: rgba(0,0,0,0.25);
+            transform: scale(1.15);
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 1024px) {
+            .carousel-section { margin-top: 70px; padding: 60px 0 80px; }
+            .cflow-card { width: 300px; height: 380px; }
+            .cflow-card[data-pos="left"] {
+                transform: translate3d(calc(-50% - 260px), -50%, -120px) rotateY(25deg) scale(0.8);
+            }
+            .cflow-card[data-pos="right"] {
+                transform: translate3d(calc(-50% + 260px), -50%, -120px) rotateY(-25deg) scale(0.8);
+            }
+            .carousel-section .section-title { font-size: 36px; }
+        }
+        @media (max-width: 768px) {
+            .carousel-viewport { height: 420px; }
+            .cflow-card { width: 280px; height: 360px; }
+            .cflow-card[data-pos="left"],
+            .cflow-card[data-pos="right"] {
+                opacity: 0.3;
+            }
+            .carousel-section .section-title { font-size: 30px; }
+            .carousel-section .section-subtitle { font-size: 16px; margin-bottom: 40px; }
+        }
+        @media (max-width: 480px) {
+            .carousel-section { margin-top: 60px; padding: 40px 16px 60px; }
+            .carousel-viewport { height: 380px; }
+            .cflow-card { width: 260px; height: 340px; }
+            .cflow-card .card-img-wrap { height: 170px; }
+            .cflow-card[data-pos="left"],
+            .cflow-card[data-pos="right"] {
+                opacity: 0;
+                pointer-events: none;
+            }
+            .carousel-section .section-title { font-size: 24px; }
+        }
     </style>
 </head>
 
@@ -295,6 +701,223 @@
         <img src="./logo.png" alt="Patronex Logo" />
     </a>
     <!-- /patronex-logo -->
+
+    <!-- ================================================
+         3D CARD CAROUSEL SECTION
+    ================================================ -->
+    <section class="carousel-section" id="hero-carousel">
+        <h2 class="section-title">Empowering Creators Everywhere</h2>
+        <p class="section-subtitle">A new way to fund open-source, creativity, and innovation.</p>
+
+        <div class="carousel-stage">
+            <div class="carousel-viewport" id="carouselViewport">
+                <!-- Ambient glow -->
+                <div class="carousel-ambient"></div>
+
+                <div class="carousel-track">
+                    <!-- Card 1 -->
+                    <div class="cflow-card" data-index="0" data-pos="center">
+                        <div class="card-inner">
+                            <div class="card-img-wrap">
+                                <img src="./slide_bg_1.png" alt="Support Open Source Creators" />
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title">Support Open Source Creators</h3>
+                                <p class="card-desc">Fund developers building the future of open-source software.</p>
+                                <a href="#" class="card-cta">
+                                    Explore Creators
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="cflow-card" data-index="1" data-pos="right">
+                        <div class="card-inner">
+                            <div class="card-img-wrap">
+                                <img src="./slide_bg_2.png" alt="Build. Share. Get Funded." />
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title">Build. Share. Get Funded.</h3>
+                                <p class="card-desc">A community-first funding platform for makers and creators.</p>
+                                <a href="#" class="card-cta">
+                                    Start Creating
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="cflow-card" data-index="2" data-pos="left">
+                        <div class="card-inner">
+                            <div class="card-img-wrap">
+                                <img src="./slide_bg_3.png" alt="Transparent Community Funding" />
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-title">Transparent Community Funding</h3>
+                                <p class="card-desc">An open alternative to Patreon — where every dollar is tracked.</p>
+                                <a href="#" class="card-cta">
+                                    Learn More
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Floor reflection surface -->
+                <div class="carousel-floor"></div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="carousel-nav">
+            <button id="prevBtn" aria-label="Previous">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <div class="carousel-dots" id="carouselDots">
+                <button class="dot active" data-dot="0" aria-label="Go to card 1"></button>
+                <button class="dot" data-dot="1" aria-label="Go to card 2"></button>
+                <button class="dot" data-dot="2" aria-label="Go to card 3"></button>
+            </div>
+            <button id="nextBtn" aria-label="Next">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+        </div>
+    </section>
+
+    <!-- Carousel JS (Premium smooth) -->
+    <script>
+    (function() {
+        'use strict';
+        const cards = document.querySelectorAll('.cflow-card');
+        const dots = document.querySelectorAll('.carousel-dots .dot');
+        const total = cards.length;
+        let current = 0;
+        let autoTimer = null;
+        let isAnimating = false;
+        let isDragging = false;
+        let startX = 0;
+        const DRAG_THRESHOLD = 40;
+        const AUTO_INTERVAL = 4500;
+        const ANIM_DURATION = 700;
+
+        function getPos(index) {
+            const diff = ((index - current) % total + total) % total;
+            if (diff === 0) return 'center';
+            if (diff === 1) return 'right';
+            if (diff === total - 1) return 'left';
+            if (diff <= Math.floor(total / 2)) return 'hidden-right';
+            return 'hidden-left';
+        }
+
+        function update() {
+            // Request animation frame for 60fps
+            requestAnimationFrame(() => {
+                cards.forEach((card) => {
+                    const idx = parseInt(card.dataset.index);
+                    const newPos = getPos(idx);
+                    if (card.dataset.pos !== newPos) {
+                        card.dataset.pos = newPos;
+                    }
+                });
+                dots.forEach((d, i) => d.classList.toggle('active', i === current));
+            });
+        }
+
+        function goTo(idx) {
+            if (isAnimating) return;
+            isAnimating = true;
+            current = ((idx % total) + total) % total;
+            update();
+            setTimeout(() => { isAnimating = false; }, ANIM_DURATION);
+        }
+
+        function next() { goTo(current + 1); }
+        function prev() { goTo(current - 1); }
+
+        // Arrow buttons
+        document.getElementById('nextBtn').addEventListener('click', () => { next(); resetAuto(); });
+        document.getElementById('prevBtn').addEventListener('click', () => { prev(); resetAuto(); });
+
+        // Dot navigation
+        dots.forEach(d => d.addEventListener('click', () => {
+            goTo(parseInt(d.dataset.dot));
+            resetAuto();
+        }));
+
+        // Keyboard
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') { next(); resetAuto(); }
+            if (e.key === 'ArrowLeft') { prev(); resetAuto(); }
+        });
+
+        // Click side cards
+        cards.forEach(card => card.addEventListener('click', () => {
+            const pos = card.dataset.pos;
+            if (pos === 'left') { prev(); resetAuto(); }
+            if (pos === 'right') { next(); resetAuto(); }
+        }));
+
+        // Mouse drag
+        const viewport = document.getElementById('carouselViewport');
+        viewport.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            viewport.style.cursor = 'grabbing';
+        });
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+        });
+        document.addEventListener('mouseup', (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            viewport.style.cursor = 'grab';
+            const diff = e.clientX - startX;
+            if (Math.abs(diff) > DRAG_THRESHOLD) {
+                diff < 0 ? next() : prev();
+                resetAuto();
+            }
+        });
+
+        // Touch swipe
+        let touchStartX = 0;
+        viewport.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+        viewport.addEventListener('touchend', (e) => {
+            const diff = e.changedTouches[0].clientX - touchStartX;
+            if (Math.abs(diff) > DRAG_THRESHOLD) {
+                diff < 0 ? next() : prev();
+                resetAuto();
+            }
+        }, { passive: true });
+
+        // Auto-slide
+        function startAuto() {
+            stopAuto();
+            autoTimer = setInterval(next, AUTO_INTERVAL);
+        }
+        function stopAuto() {
+            if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+        }
+        function resetAuto() {
+            stopAuto();
+            startAuto();
+        }
+
+        // Pause on hover
+        const section = document.getElementById('hero-carousel');
+        section.addEventListener('mouseenter', stopAuto);
+        section.addEventListener('mouseleave', startAuto);
+
+        // Init
+        update();
+        startAuto();
+    })();
+    </script>
+    <!-- /3D CARD CAROUSEL -->
     <script async src="https://events.framer.com/script?v=2"
         data-fid="84c6ef07d055416712bfa333d88cce1978c38a76d7056de84d0d761196673083" data-no-nt></script>
     <!-- Start of bodyStart -->
