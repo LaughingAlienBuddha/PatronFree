@@ -256,7 +256,10 @@
     <!-- End of headEnd -->
     <style>
         /* === EXISTING OVERRIDES === */
-        #__framer-badge-container { display: none !important; }
+        #__framer-badge-container {
+            display: none !important;
+        }
+
         .framer-1hgrmo4-container {
             position: fixed !important;
             top: 0 !important;
@@ -271,10 +274,17 @@
             background: #fff !important;
             backdrop-filter: none !important;
             -webkit-backdrop-filter: none !important;
-            border-bottom: 1px solid rgba(0,0,0,0.08) !important;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
         }
-        #main { padding-top: 70px !important; }
-        body { background-color: #fff !important; }
+
+        #main {
+            padding-top: 70px !important;
+        }
+
+        body {
+            background-color: #fff !important;
+        }
+
         #patronex-logo-link {
             position: fixed !important;
             top: 15px !important;
@@ -283,6 +293,7 @@
             display: flex;
             align-items: center;
         }
+
         #patronex-logo-link img {
             height: 32px;
             width: auto;
@@ -307,11 +318,11 @@
             padding: 100px 0 100px;
             margin-top: 0;
             background: linear-gradient(180deg,
-                #ffffff 0%,
-                #f6f7fb 15%,
-                #eceef5 40%,
-                #e4e7f0 70%,
-                #dce0ec 100%);
+                    #ffffff 0%,
+                    #f6f7fb 15%,
+                    #eceef5 40%,
+                    #e4e7f0 70%,
+                    #dce0ec 100%);
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
@@ -355,7 +366,10 @@
             user-select: none;
             -webkit-user-select: none;
         }
-        .carousel-viewport:active { cursor: grabbing; }
+
+        .carousel-viewport:active {
+            cursor: grabbing;
+        }
 
         .carousel-track {
             position: relative;
@@ -373,9 +387,9 @@
             width: 80%;
             height: 100px;
             background: radial-gradient(ellipse at center,
-                rgba(108, 58, 245, 0.06) 0%,
-                rgba(108, 58, 245, 0.02) 40%,
-                transparent 70%);
+                    rgba(108, 58, 245, 0.06) 0%,
+                    rgba(108, 58, 245, 0.02) 40%,
+                    transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             z-index: 0;
@@ -390,9 +404,9 @@
             height: 420px;
             transform: translate3d(-50%, -55%, 0);
             background: radial-gradient(ellipse at center,
-                rgba(108, 58, 245, 0.1) 0%,
-                rgba(108, 58, 245, 0.04) 40%,
-                transparent 70%);
+                    rgba(108, 58, 245, 0.1) 0%,
+                    rgba(108, 58, 245, 0.04) 40%,
+                    transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             z-index: 0;
@@ -411,9 +425,9 @@
             overflow: visible;
             /* GPU-accelerated smooth transitions */
             transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1),
-                        opacity 0.7s cubic-bezier(0.25, 1, 0.5, 1),
-                        box-shadow 0.7s cubic-bezier(0.25, 1, 0.5, 1),
-                        filter 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+                opacity 0.7s cubic-bezier(0.25, 1, 0.5, 1),
+                box-shadow 0.7s cubic-bezier(0.25, 1, 0.5, 1),
+                filter 0.7s cubic-bezier(0.25, 1, 0.5, 1);
             will-change: transform, opacity, box-shadow;
             transform-style: preserve-3d;
         }
@@ -430,7 +444,7 @@
             border-radius: 20px;
             overflow: hidden;
             position: relative;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.9);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
         }
 
         /* Floor reflection */
@@ -446,8 +460,8 @@
             transform: scaleY(-1) translateY(-4px);
             opacity: 0.08;
             filter: blur(6px);
-            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 60%);
-            mask-image: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 60%);
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, transparent 60%);
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, transparent 60%);
             pointer-events: none;
             transition: opacity 0.7s cubic-bezier(0.25, 1, 0.5, 1);
         }
@@ -459,6 +473,7 @@
             position: relative;
             flex-shrink: 0;
         }
+
         .cflow-card .card-img-wrap img {
             width: 100%;
             height: 100%;
@@ -466,6 +481,7 @@
             display: block;
             transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
         }
+
         .cflow-card[data-pos="center"]:hover .card-img-wrap img {
             transform: scale(1.05);
         }
@@ -508,19 +524,23 @@
             cursor: pointer;
             font-family: 'Inter', sans-serif;
             transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1),
-                        box-shadow 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+                box-shadow 0.25s cubic-bezier(0.25, 1, 0.5, 1);
             width: fit-content;
             text-decoration: none;
             box-shadow: 0 2px 8px rgba(108, 58, 245, 0.25);
         }
+
         .cflow-card .card-cta:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 24px rgba(108, 58, 245, 0.45);
         }
+
         .cflow-card .card-cta svg {
-            width: 14px; height: 14px;
+            width: 14px;
+            height: 14px;
             transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
         }
+
         .cflow-card .card-cta:hover svg {
             transform: translateX(3px);
         }
@@ -530,29 +550,38 @@
             transform: translate3d(-50%, -50%, 0) rotateY(0deg) scale(1);
             opacity: 1;
             z-index: 10;
-            box-shadow: 0 35px 80px rgba(0,0,0,0.14),
-                        0 15px 35px rgba(0,0,0,0.08),
-                        0 5px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 35px 80px rgba(0, 0, 0, 0.14),
+                0 15px 35px rgba(0, 0, 0, 0.08),
+                0 5px 15px rgba(0, 0, 0, 0.05);
         }
-        .cflow-card[data-pos="center"]::after { opacity: 0.12; }
+
+        .cflow-card[data-pos="center"]::after {
+            opacity: 0.12;
+        }
 
         .cflow-card[data-pos="left"] {
             transform: translate3d(calc(-50% - 340px), -50%, -150px) rotateY(30deg) scale(0.82);
             opacity: 0.65;
             z-index: 5;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
             filter: brightness(0.88) saturate(0.9);
         }
-        .cflow-card[data-pos="left"]::after { opacity: 0.05; }
+
+        .cflow-card[data-pos="left"]::after {
+            opacity: 0.05;
+        }
 
         .cflow-card[data-pos="right"] {
             transform: translate3d(calc(-50% + 340px), -50%, -150px) rotateY(-30deg) scale(0.82);
             opacity: 0.65;
             z-index: 5;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
             filter: brightness(0.88) saturate(0.9);
         }
-        .cflow-card[data-pos="right"]::after { opacity: 0.05; }
+
+        .cflow-card[data-pos="right"]::after {
+            opacity: 0.05;
+        }
 
         .cflow-card[data-pos="hidden-left"] {
             transform: translate3d(calc(-50% - 650px), -50%, -300px) rotateY(50deg) scale(0.55);
@@ -560,6 +589,7 @@
             z-index: 1;
             pointer-events: none;
         }
+
         .cflow-card[data-pos="hidden-right"] {
             transform: translate3d(calc(-50% + 650px), -50%, -300px) rotateY(-50deg) scale(0.55);
             opacity: 0;
@@ -574,22 +604,31 @@
             inset: 0;
             border-radius: 20px;
             background: linear-gradient(135deg,
-                rgba(108, 58, 245, 0.06) 0%,
-                rgba(255, 255, 255, 0) 60%);
+                    rgba(108, 58, 245, 0.06) 0%,
+                    rgba(255, 255, 255, 0) 60%);
             z-index: 1;
             opacity: 0;
             transition: opacity 0.4s ease;
             pointer-events: none;
         }
+
         .cflow-card[data-pos="center"]:hover .card-inner::before {
             opacity: 1;
         }
 
         /* Subtle float on center card */
         @keyframes cardFloat {
-            0%, 100% { transform: translate3d(-50%, -50%, 0) rotateY(0deg) scale(1) translateY(0); }
-            50%      { transform: translate3d(-50%, -50%, 0) rotateY(0deg) scale(1) translateY(-8px); }
+
+            0%,
+            100% {
+                transform: translate3d(-50%, -50%, 0) rotateY(0deg) scale(1) translateY(0);
+            }
+
+            50% {
+                transform: translate3d(-50%, -50%, 0) rotateY(0deg) scale(1) translateY(-8px);
+            }
         }
+
         .cflow-card[data-pos="center"] {
             animation: cardFloat 5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
         }
@@ -603,28 +642,32 @@
             position: relative;
             z-index: 5;
         }
+
         .carousel-nav button {
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.9);
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(0,0,0,0.06);
+            border: 1px solid rgba(0, 0, 0, 0.06);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
         }
+
         .carousel-nav button:hover {
             background: #fff;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
             transform: scale(1.1);
         }
+
         .carousel-nav button:active {
             transform: scale(0.95);
         }
+
         .carousel-nav button svg {
             width: 20px;
             height: 20px;
@@ -638,59 +681,107 @@
             gap: 10px;
             margin: 0 22px;
         }
+
         .carousel-dots .dot {
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background: rgba(0,0,0,0.12);
+            background: rgba(0, 0, 0, 0.12);
             border: none;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
             padding: 0;
         }
+
         .carousel-dots .dot.active {
             background: #6c3af5;
             transform: scale(1.35);
             box-shadow: 0 0 8px rgba(108, 58, 245, 0.4);
         }
+
         .carousel-dots .dot:hover:not(.active) {
-            background: rgba(0,0,0,0.25);
+            background: rgba(0, 0, 0, 0.25);
             transform: scale(1.15);
         }
 
         /* ---- Responsive ---- */
         @media (max-width: 1024px) {
-            .carousel-section { margin-top: 70px; padding: 60px 0 80px; }
-            .cflow-card { width: 300px; height: 380px; }
+            .carousel-section {
+                margin-top: 70px;
+                padding: 60px 0 80px;
+            }
+
+            .cflow-card {
+                width: 300px;
+                height: 380px;
+            }
+
             .cflow-card[data-pos="left"] {
                 transform: translate3d(calc(-50% - 260px), -50%, -120px) rotateY(25deg) scale(0.8);
             }
+
             .cflow-card[data-pos="right"] {
                 transform: translate3d(calc(-50% + 260px), -50%, -120px) rotateY(-25deg) scale(0.8);
             }
-            .carousel-section .section-title { font-size: 36px; }
+
+            .carousel-section .section-title {
+                font-size: 36px;
+            }
         }
+
         @media (max-width: 768px) {
-            .carousel-viewport { height: 420px; }
-            .cflow-card { width: 280px; height: 360px; }
+            .carousel-viewport {
+                height: 420px;
+            }
+
+            .cflow-card {
+                width: 280px;
+                height: 360px;
+            }
+
             .cflow-card[data-pos="left"],
             .cflow-card[data-pos="right"] {
                 opacity: 0.3;
             }
-            .carousel-section .section-title { font-size: 30px; }
-            .carousel-section .section-subtitle { font-size: 16px; margin-bottom: 40px; }
+
+            .carousel-section .section-title {
+                font-size: 30px;
+            }
+
+            .carousel-section .section-subtitle {
+                font-size: 16px;
+                margin-bottom: 40px;
+            }
         }
+
         @media (max-width: 480px) {
-            .carousel-section { margin-top: 60px; padding: 40px 16px 60px; }
-            .carousel-viewport { height: 380px; }
-            .cflow-card { width: 260px; height: 340px; }
-            .cflow-card .card-img-wrap { height: 170px; }
+            .carousel-section {
+                margin-top: 60px;
+                padding: 40px 16px 60px;
+            }
+
+            .carousel-viewport {
+                height: 380px;
+            }
+
+            .cflow-card {
+                width: 260px;
+                height: 340px;
+            }
+
+            .cflow-card .card-img-wrap {
+                height: 170px;
+            }
+
             .cflow-card[data-pos="left"],
             .cflow-card[data-pos="right"] {
                 opacity: 0;
                 pointer-events: none;
             }
-            .carousel-section .section-title { font-size: 24px; }
+
+            .carousel-section .section-title {
+                font-size: 24px;
+            }
         }
     </style>
 </head>
@@ -726,7 +817,11 @@
                                 <p class="card-desc">Fund developers building the future of open-source software.</p>
                                 <a href="#" class="card-cta">
                                     Explore Creators
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                        <polyline points="12 5 19 12 12 19" />
+                                    </svg>
                                 </a>
                             </div>
                         </div>
@@ -742,7 +837,11 @@
                                 <p class="card-desc">A community-first funding platform for makers and creators.</p>
                                 <a href="#" class="card-cta">
                                     Start Creating
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                        <polyline points="12 5 19 12 12 19" />
+                                    </svg>
                                 </a>
                             </div>
                         </div>
@@ -758,7 +857,11 @@
                                 <p class="card-desc">An open alternative to Patreon — where every dollar is tracked.</p>
                                 <a href="#" class="card-cta">
                                     Learn More
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12" />
+                                        <polyline points="12 5 19 12 12 19" />
+                                    </svg>
                                 </a>
                             </div>
                         </div>
@@ -773,7 +876,10 @@
         <!-- Navigation -->
         <div class="carousel-nav">
             <button id="prevBtn" aria-label="Previous">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6" />
+                </svg>
             </button>
             <div class="carousel-dots" id="carouselDots">
                 <button class="dot active" data-dot="0" aria-label="Go to card 1"></button>
@@ -781,141 +887,144 @@
                 <button class="dot" data-dot="2" aria-label="Go to card 3"></button>
             </div>
             <button id="nextBtn" aria-label="Next">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6" />
+                </svg>
             </button>
         </div>
     </section>
 
     <!-- Carousel JS (Premium smooth) -->
     <script>
-    (function() {
-        'use strict';
-        const cards = document.querySelectorAll('.cflow-card');
-        const dots = document.querySelectorAll('.carousel-dots .dot');
-        const total = cards.length;
-        let current = 0;
-        let autoTimer = null;
-        let isAnimating = false;
-        let isDragging = false;
-        let startX = 0;
-        const DRAG_THRESHOLD = 40;
-        const AUTO_INTERVAL = 4500;
-        const ANIM_DURATION = 700;
+        (function () {
+            'use strict';
+            const cards = document.querySelectorAll('.cflow-card');
+            const dots = document.querySelectorAll('.carousel-dots .dot');
+            const total = cards.length;
+            let current = 0;
+            let autoTimer = null;
+            let isAnimating = false;
+            let isDragging = false;
+            let startX = 0;
+            const DRAG_THRESHOLD = 40;
+            const AUTO_INTERVAL = 4500;
+            const ANIM_DURATION = 700;
 
-        function getPos(index) {
-            const diff = ((index - current) % total + total) % total;
-            if (diff === 0) return 'center';
-            if (diff === 1) return 'right';
-            if (diff === total - 1) return 'left';
-            if (diff <= Math.floor(total / 2)) return 'hidden-right';
-            return 'hidden-left';
-        }
+            function getPos(index) {
+                const diff = ((index - current) % total + total) % total;
+                if (diff === 0) return 'center';
+                if (diff === 1) return 'right';
+                if (diff === total - 1) return 'left';
+                if (diff <= Math.floor(total / 2)) return 'hidden-right';
+                return 'hidden-left';
+            }
 
-        function update() {
-            // Request animation frame for 60fps
-            requestAnimationFrame(() => {
-                cards.forEach((card) => {
-                    const idx = parseInt(card.dataset.index);
-                    const newPos = getPos(idx);
-                    if (card.dataset.pos !== newPos) {
-                        card.dataset.pos = newPos;
-                    }
+            function update() {
+                // Request animation frame for 60fps
+                requestAnimationFrame(() => {
+                    cards.forEach((card) => {
+                        const idx = parseInt(card.dataset.index);
+                        const newPos = getPos(idx);
+                        if (card.dataset.pos !== newPos) {
+                            card.dataset.pos = newPos;
+                        }
+                    });
+                    dots.forEach((d, i) => d.classList.toggle('active', i === current));
                 });
-                dots.forEach((d, i) => d.classList.toggle('active', i === current));
+            }
+
+            function goTo(idx) {
+                if (isAnimating) return;
+                isAnimating = true;
+                current = ((idx % total) + total) % total;
+                update();
+                setTimeout(() => { isAnimating = false; }, ANIM_DURATION);
+            }
+
+            function next() { goTo(current + 1); }
+            function prev() { goTo(current - 1); }
+
+            // Arrow buttons
+            document.getElementById('nextBtn').addEventListener('click', () => { next(); resetAuto(); });
+            document.getElementById('prevBtn').addEventListener('click', () => { prev(); resetAuto(); });
+
+            // Dot navigation
+            dots.forEach(d => d.addEventListener('click', () => {
+                goTo(parseInt(d.dataset.dot));
+                resetAuto();
+            }));
+
+            // Keyboard
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') { next(); resetAuto(); }
+                if (e.key === 'ArrowLeft') { prev(); resetAuto(); }
             });
-        }
 
-        function goTo(idx) {
-            if (isAnimating) return;
-            isAnimating = true;
-            current = ((idx % total) + total) % total;
+            // Click side cards
+            cards.forEach(card => card.addEventListener('click', () => {
+                const pos = card.dataset.pos;
+                if (pos === 'left') { prev(); resetAuto(); }
+                if (pos === 'right') { next(); resetAuto(); }
+            }));
+
+            // Mouse drag
+            const viewport = document.getElementById('carouselViewport');
+            viewport.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                startX = e.clientX;
+                viewport.style.cursor = 'grabbing';
+            });
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                e.preventDefault();
+            });
+            document.addEventListener('mouseup', (e) => {
+                if (!isDragging) return;
+                isDragging = false;
+                viewport.style.cursor = 'grab';
+                const diff = e.clientX - startX;
+                if (Math.abs(diff) > DRAG_THRESHOLD) {
+                    diff < 0 ? next() : prev();
+                    resetAuto();
+                }
+            });
+
+            // Touch swipe
+            let touchStartX = 0;
+            viewport.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].clientX;
+            }, { passive: true });
+            viewport.addEventListener('touchend', (e) => {
+                const diff = e.changedTouches[0].clientX - touchStartX;
+                if (Math.abs(diff) > DRAG_THRESHOLD) {
+                    diff < 0 ? next() : prev();
+                    resetAuto();
+                }
+            }, { passive: true });
+
+            // Auto-slide
+            function startAuto() {
+                stopAuto();
+                autoTimer = setInterval(next, AUTO_INTERVAL);
+            }
+            function stopAuto() {
+                if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+            }
+            function resetAuto() {
+                stopAuto();
+                startAuto();
+            }
+
+            // Pause on hover
+            const section = document.getElementById('hero-carousel');
+            section.addEventListener('mouseenter', stopAuto);
+            section.addEventListener('mouseleave', startAuto);
+
+            // Init
             update();
-            setTimeout(() => { isAnimating = false; }, ANIM_DURATION);
-        }
-
-        function next() { goTo(current + 1); }
-        function prev() { goTo(current - 1); }
-
-        // Arrow buttons
-        document.getElementById('nextBtn').addEventListener('click', () => { next(); resetAuto(); });
-        document.getElementById('prevBtn').addEventListener('click', () => { prev(); resetAuto(); });
-
-        // Dot navigation
-        dots.forEach(d => d.addEventListener('click', () => {
-            goTo(parseInt(d.dataset.dot));
-            resetAuto();
-        }));
-
-        // Keyboard
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') { next(); resetAuto(); }
-            if (e.key === 'ArrowLeft') { prev(); resetAuto(); }
-        });
-
-        // Click side cards
-        cards.forEach(card => card.addEventListener('click', () => {
-            const pos = card.dataset.pos;
-            if (pos === 'left') { prev(); resetAuto(); }
-            if (pos === 'right') { next(); resetAuto(); }
-        }));
-
-        // Mouse drag
-        const viewport = document.getElementById('carouselViewport');
-        viewport.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            startX = e.clientX;
-            viewport.style.cursor = 'grabbing';
-        });
-        document.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            e.preventDefault();
-        });
-        document.addEventListener('mouseup', (e) => {
-            if (!isDragging) return;
-            isDragging = false;
-            viewport.style.cursor = 'grab';
-            const diff = e.clientX - startX;
-            if (Math.abs(diff) > DRAG_THRESHOLD) {
-                diff < 0 ? next() : prev();
-                resetAuto();
-            }
-        });
-
-        // Touch swipe
-        let touchStartX = 0;
-        viewport.addEventListener('touchstart', (e) => {
-            touchStartX = e.touches[0].clientX;
-        }, { passive: true });
-        viewport.addEventListener('touchend', (e) => {
-            const diff = e.changedTouches[0].clientX - touchStartX;
-            if (Math.abs(diff) > DRAG_THRESHOLD) {
-                diff < 0 ? next() : prev();
-                resetAuto();
-            }
-        }, { passive: true });
-
-        // Auto-slide
-        function startAuto() {
-            stopAuto();
-            autoTimer = setInterval(next, AUTO_INTERVAL);
-        }
-        function stopAuto() {
-            if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
-        }
-        function resetAuto() {
-            stopAuto();
             startAuto();
-        }
-
-        // Pause on hover
-        const section = document.getElementById('hero-carousel');
-        section.addEventListener('mouseenter', stopAuto);
-        section.addEventListener('mouseleave', startAuto);
-
-        // Init
-        update();
-        startAuto();
-    })();
+        })();
     </script>
     <!-- /3D CARD CAROUSEL -->
     <script async src="https://events.framer.com/script?v=2"
@@ -969,6 +1078,598 @@
         href="https://framerusercontent.com/sites/39rsA7qYYiemWQPStrVbYW/motion.Dy7oBmdm.mjs">
     <script type="module" async data-framer-bundle="main" fetchPriority="low"
         src="https://framerusercontent.com/sites/39rsA7qYYiemWQPStrVbYW/script_main.BHk5pRsQ.mjs"></script>
+    <!-- Start of bodyEnd -->
+
+    <!-- End of bodyEnd -->
+</body>
+
+<head>
+    <meta charset="utf-8">
+
+
+    <script>try { if (localStorage.get("__framer_force_showing_editorbar_since")) { const n = document.createElement("link"); n.rel = "modulepreload"; n.href = "https://framer.com/edit/init.mjs"; document.head.appendChild(n) } } catch (e) { }</script>
+    <!-- Start of headStart -->
+
+    <!-- End of headStart -->
+    <meta name="viewport" content="width=device-width">
+    <meta name="generator" content="Framer 10141bf">
+    <title>3D Image Split by Framer University</title>
+    <meta name="description" content="3D Image Split  for Framer. Created by Framer University.">
+    <meta name="framer-search-index"
+        content="https://framerusercontent.com/sites/2XI6WGl6JowzG6JYRWZtZ1/searchIndex-1JAgzhnbt8LA.json">
+    <meta name="framer-search-index-fallback"
+        content="https://framerusercontent.com/sites/2XI6WGl6JowzG6JYRWZtZ1/searchIndex-6FrzLG4Mwjz1.json">
+    <meta name="framer-html-plugin" content="disable">
+    <link href="https://framerusercontent.com/images/5cobUGTEj03dPTNLhGrQTXXW7M.png" rel="icon"
+        media="(prefers-color-scheme: light)">
+    <link href="https://framerusercontent.com/images/5cobUGTEj03dPTNLhGrQTXXW7M.png" rel="icon"
+        media="(prefers-color-scheme: dark)">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="3D Image Split  by Framer University">
+    <meta property="og:description" content="3D Image Split  for Framer. Created by Framer University.">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="3D Image Split  by Framer University">
+    <meta name="twitter:description" content="3D Image Split  for Framer. Created by Framer University.">
+    <style data-framer-css-ssr>
+        html,
+        body,
+        #main {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-font-smoothing: inherit;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        figure {
+            margin: 0;
+        }
+
+        body,
+        input,
+        textarea,
+        select,
+        button {
+            font-size: 12px;
+            font-family: sans-serif;
+        }
+
+        body {
+            --token-a042497d-749d-4d03-8d3a-78930210d354: rgb(0, 128, 255);
+            --token-419394a1-565d-4952-8ba3-b4f1eb92339c: #050505;
+            --token-bf966309-2582-4df8-98f4-f091ce81e703: #131415;
+            --token-3edc53ec-2b53-43fb-be53-9e75b862c113: #161819;
+            --token-38c4cf9a-0aa8-4902-ad35-3a2d52d62d05: #1A1C1D;
+            --token-6029dbfc-fbac-430b-a786-4e5dcea7423c: #1E2021;
+            --token-965e5c17-6359-41cc-bd03-2fa4898e2c2b: #222426;
+            --token-88270a27-b998-4d64-94e7-850fa71e2842: #272B2D;
+            --token-6caa153b-31c9-4eaa-bd6e-82180b70617c: #33373A;
+            --token-778dc32c-fa91-4f86-8154-267d5648c0d5: #474D50;
+            --token-82b5832e-a0cf-4abf-84b4-daf77b132a71: #51565A;
+            --token-84002464-baa0-40a1-a1a1-82899aec539a: #9BA1A5;
+            --token-20608b9f-0145-4a1e-b971-ee948ebbb015: #FFFFFF;
+            --token-2809bb06-1427-4fc2-b390-96168fc6b475: rgb(116, 32, 223);
+            --token-e4aca627-11c4-47cb-baf1-d92a36b0f3c6: rgb(152, 107, 239);
+
+            @supports (color: color(display-p3 1 1 1)) {}
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                @supports (color: color(display-p3 1 1 1)) {}
+            }
+        }
+
+        @supports (z-index: calc(infinity)) {
+            #__framer-badge-container {
+                --infinity: infinity;
+            }
+        }
+
+        #__framer-badge-container {
+            position: fixed;
+            bottom: 0;
+            padding: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            pointer-events: none;
+            z-index: calc(var(--infinity, 2147483647));
+        }
+    </style>
+    <style data-framer-font-css>
+        /* latin-ext */
+        @font-face {
+            font-family: 'Instrument Serif';
+            font-style: italic;
+            font-weight: 400;
+            font-display: swap;
+            src: url(https://fonts.gstatic.com/s/instrumentserif/v5/jizHRFtNs2ka5fXjeivQ4LroWlx-6zAjgn7MsNo.woff2) format('woff2');
+            unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+        }
+
+        /* latin */
+        @font-face {
+            font-family: 'Instrument Serif';
+            font-style: italic;
+            font-weight: 400;
+            font-display: swap;
+            src: url(https://fonts.gstatic.com/s/instrumentserif/v5/jizHRFtNs2ka5fXjeivQ4LroWlx-6zAjjH7M.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+
+        /* latin-ext */
+        @font-face {
+            font-family: 'Instrument Serif';
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url(https://fonts.gstatic.com/s/instrumentserif/v5/jizBRFtNs2ka5fXjeivQ4LroWlx-6zsTjmbI.woff2) format('woff2');
+            unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+        }
+
+        /* latin */
+        @font-face {
+            font-family: 'Instrument Serif';
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url(https://fonts.gstatic.com/s/instrumentserif/v5/jizBRFtNs2ka5fXjeivQ4LroWlx-6zUTjg.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+
+        @font-face {
+            font-family: "Inter";
+            src: url("https://framerusercontent.com/assets/5vvr9Vy74if2I6bQbJvbw7SY1pQ.woff2");
+            font-display: swap;
+            font-style: normal;
+            font-weight: 400;
+            unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F
+        }
+
+        @font-face {
+            font-family: "Inter";
+            src: url("https://framerusercontent.com/assets/EOr0mi4hNtlgWNn9if640EZzXCo.woff2");
+            font-display: swap;
+            font-style: normal;
+            font-weight: 400;
+            unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116
+        }
+
+        @font-face {
+            font-family: "Inter";
+            src: url("https://framerusercontent.com/assets/Y9k9QrlZAqio88Klkmbd8VoMQc.woff2");
+            font-display: swap;
+            font-style: normal;
+            font-weight: 400;
+            unicode-range: U+1F00-1FFF
+        }
+
+        @font-face {
+            font-family: "Inter";
+            src: url("https://framerusercontent.com/assets/OYrD2tBIBPvoJXiIHnLoOXnY9M.woff2");
+            font-display: swap;
+            font-style: normal;
+            font-weight: 400;
+            unicode-range: U+0370-03FF
+        }
+
+        @font-face {
+            font-family: "Inter";
+            src: url("https://framerusercontent.com/assets/JeYwfuaPfZHQhEG8U5gtPDZ7WQ.woff2");
+            font-display: swap;
+            font-style: normal;
+            font-weight: 400;
+            unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF
+        }
+
+        @font-face {
+            font-family: "Inter";
+            src: url("https://framerusercontent.com/assets/GrgcKwrN6d3Uz8EwcLHZxwEfC4.woff2");
+            font-display: swap;
+            font-style: normal;
+            font-weight: 400;
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2070, U+2074-207E, U+2080-208E, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
+        }
+
+        @font-face {
+            font-family: "Inter";
+            src: url("https://framerusercontent.com/assets/b6Y37FthZeALduNqHicBT6FutY.woff2");
+            font-display: swap;
+            font-style: normal;
+            font-weight: 400;
+            unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB
+        }
+
+        @font-face {
+            font-family: "Instrument Serif Placeholder";
+            src: local("Times New Roman");
+            ascent-override: 117.87%;
+            descent-override: 36.91%;
+            line-gap-override: 0.00%;
+            size-adjust: 83.99%
+        }
+
+        @font-face {
+            font-family: "Inter Placeholder";
+            src: local("Arial");
+            ascent-override: 89.79%;
+            descent-override: 22.36%;
+            line-gap-override: 0.00%;
+            size-adjust: 107.89%
+        }
+    </style>
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <!-- Start of headEnd -->
+
+    <!-- End of headEnd -->
+</head>
+
+<body>
+    <script async src="https://events.framer.com/script?v=2"
+        data-fid="6e35c7e91d0ad0f408e2f484e485ac07733bd48dc0e730951b9f177c3817c9c4" data-no-nt></script>
+    <!-- Start of bodyStart -->
+
+    <!-- End of bodyStart -->
+    <script data-relative-date-script="global">!function () {
+            var c = new Map; function p(e, t, n) { let r = [n, { numeric: t, style: e }], o = JSON.stringify(r), s = c.get(o); if (s) return s; let i = new Intl.RelativeTimeFormat(...r); return c.set(o, i), i } function D(e, t, n, a, r, o, s) { let i = U(e, t, n), d = F(e, t, i), u = p(a, r, s).format(d, i); return o ? R(u) : u } function R(e) { return e.charAt(0).toUpperCase() + e.slice(1) } function U(e, t, n) { if (n !== "auto") return n; let a = T(e, t); if (Math.abs(a) <= 7) return "day"; let r = g(e, t); if (Math.abs(r) <= 4) return "week"; let o = v(e, t); return Math.abs(o) <= 12 ? "month" : "year" } var h = 1e3, y = 6e4, C = 36e5, M = 864e5, w = 6048e5; function F(e, t, n) { let a = e.getTime() - t.getTime(); switch (n) { case "second": return Math.trunc(a / h); case "minute": return Math.trunc(a / y); case "hour": return Math.trunc(a / C); case "day": return T(e, t); case "week": return g(e, t); case "month": return v(e, t); case "quarter": return _(e, t); case "year": return x(e, t) }let r = n } function l(e) { let t = new Date(e); return t.setUTCHours(0, 0, 0, 0), t } function T(e, t) { let n = l(e).getTime(), a = l(t).getTime(); return Math.round((n - a) / M) } function f(e) { let t = new Date(e), n = t.getUTCDay(), a = (n < 1 ? 7 : 0) + n - 1; return t.setUTCDate(t.getUTCDate() - a), t.setUTCHours(0, 0, 0, 0), t } function g(e, t) { let n = f(e).getTime(), a = f(t).getTime(); return Math.round((n - a) / w) } function v(e, t) { let n = e.getUTCFullYear() - t.getUTCFullYear(), a = e.getUTCMonth() - t.getUTCMonth(); return n * 12 + a } function m(e) { let t = e.getUTCMonth(); return Math.trunc(t / 3) } function _(e, t) { let n = e.getUTCFullYear() - t.getUTCFullYear(), a = m(e) - m(t); return n * 4 + a } function x(e, t) { return e.getUTCFullYear() - t.getUTCFullYear() } window.__framer_formatRelativeDate = D;
+        }()</script>
+    <div id="main"></div>
+    <script>!function () {
+            var w = "framer_variant"; function u(a, r) { let e = r.indexOf("#"), t = e === -1 ? r : r.substring(0, e), o = e === -1 ? "" : r.substring(e), n = t.indexOf("?"), h = n === -1 ? t : t.substring(0, n), d = n === -1 ? "" : t.substring(n), s = new URLSearchParams(d), m = new URLSearchParams(a); for (let [i, l] of m) s.has(i) || i !== w && s.append(i, l); let c = s.toString(); return c === "" ? t + o : h + "?" + c + o } var g = 'div#main a[href^="#"],div#main a[href^="/"],div#main a[href^="."]', f = "div#main a[data-framer-preserve-params]", S = document.currentScript?.hasAttribute("data-preserve-internal-params"); if (window.location.search && !navigator.webdriver && !/bot|-google|google-|yandex|ia_archiver|crawl|spider/iu.test(navigator.userAgent)) { let a = document.querySelectorAll(S ? `${g},${f}` : f); for (let r of a) { let e = u(window.location.search, r.href); r.setAttribute("href", e) } }
+        }()</script>
+
+    <div id="__framer-badge-container"><!--$--><!--$--><!--$--><a
+            class="framer-6jWyo framer-n0ccwk framer-v-n0ccwk framer-bmpgw8 __framer-badge"
+            data-framer-appear-id="n0ccwk" data-framer-name="Light" data-nosnippet="true"
+            style="will-change:transform;pointer-events:auto;opacity:0.001;transform:translateY(10px)"
+            href="https://www.framer.com" rel="noopener"
+            title="Create a free website with Framer, the website builder loved by startups, designers and agencies.">
+            <div class="framer-13yxzio" data-framer-name="Backdrop"
+                style="background-color:rgb(255, 255, 255);border-bottom-left-radius:10px;border-bottom-right-radius:10px;border-top-left-radius:10px;border-top-right-radius:10px;box-shadow:0px 0.6021873017743928px 1.5656869846134214px -1.5px rgba(0, 0, 0, 0.17), 0px 2.288533303243457px 5.950186588432988px -3px rgba(0, 0, 0, 0.14), 0px 10px 26px -4.5px rgba(0, 0, 0, 0.02)">
+            </div>
+            <div class="framer-19yaanm" data-framer-name="Content" style="transform:translate(-50%, -50%)">
+                <div class="framer-1kflzx5">
+                    <div data-framer-name="Logo" class="framer-hcsc7 framer-e50co"
+                        style="--1bd4d3i:rgb(0, 0, 0);--otdjsv:rgb(0, 0, 0);transform:translateX(-50%)"></div>
+                </div><!--$-->
+                <p style="position:absolute;transform:scale(0.001)">Create a free website with Framer, the website
+                    builder loved by startups, designers and agencies.</p>
+                <div data-framer-name="Text" class="framer-g7oZR framer-1um7t9d"
+                    style="--1bd4d3i:rgb(0, 0, 0);--otdjsv:rgb(0, 0, 0)"></div><!--/$-->
+            </div>
+            <div class="framer-j4ugry" data-framer-name="Bottom"
+                style="mask:linear-gradient(180deg, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%) add;-webkit-mask:linear-gradient(180deg, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%) add;border-bottom-left-radius:11px;border-bottom-right-radius:11px;border-top-left-radius:11px;border-top-right-radius:11px;box-shadow:inset 0px 0px 0px 1px rgb(0, 0, 0);opacity:0.06">
+            </div>
+            <div class="framer-jnuwbw" data-framer-name="Border"
+                style="border-bottom-left-radius:11px;border-bottom-right-radius:11px;border-top-left-radius:11px;border-top-right-radius:11px;box-shadow:inset 0px 0px 0px 1px rgb(0, 0, 0);opacity:0.04">
+            </div>
+        </a><!--/$--><!--/$--><!--/$--></div>
+    <script data-framer-appear-animation="no-preference"></script>
+    <script>typeof document < "u" && (window.process = { ...window.process, env: { ...window.process?.env, NODE_ENV: "production" } });</script>
+    <link rel="modulepreload" fetchpriority="low"
+        href="https://framerusercontent.com/sites/2XI6WGl6JowzG6JYRWZtZ1/react.G3EGc0ga.mjs">
+    <link rel="modulepreload" fetchpriority="low"
+        href="https://framerusercontent.com/sites/2XI6WGl6JowzG6JYRWZtZ1/rolldown-runtime.D3cOTcPh.mjs">
+    <link rel="modulepreload" fetchpriority="low"
+        href="https://framerusercontent.com/sites/2XI6WGl6JowzG6JYRWZtZ1/framer.C_wZ8CG9.mjs">
+    <link rel="modulepreload" fetchpriority="low"
+        href="https://framerusercontent.com/sites/2XI6WGl6JowzG6JYRWZtZ1/motion.Dy7oBmdm.mjs">
+    <script type="module" async data-framer-bundle="main" fetchPriority="low"
+        src="https://framerusercontent.com/sites/2XI6WGl6JowzG6JYRWZtZ1/script_main.DU_wemJ8.mjs"></script>
+    <!-- Start of bodyEnd -->
+
+    <!-- End of bodyEnd -->
+</body>
+
+<head>
+    <meta charset="utf-8">
+
+
+    <script>try { if (localStorage.get("__framer_force_showing_editorbar_since")) { const n = document.createElement("link"); n.rel = "modulepreload"; n.href = "https://framer.com/edit/init.mjs"; document.head.appendChild(n) } } catch (e) { }</script>
+    <!-- Start of headStart -->
+
+    <!-- End of headStart -->
+    <meta name="viewport" content="width=device-width">
+    <meta name="generator" content="Framer 10141bf">
+    <title>3D Image Split by Framer University</title>
+    <meta name="description" content="3D Image Split  for Framer. Created by Framer University.">
+    <meta name="framer-search-index"
+        content="https://framerusercontent.com/sites/2XI6WGl6JowzG6JYRWZtZ1/searchIndex-1JAgzhnbt8LA.json">
+    <meta name="framer-search-index-fallback"
+        content="https://framerusercontent.com/sites/2XI6WGl6JowzG6JYRWZtZ1/searchIndex-6FrzLG4Mwjz1.json">
+    <meta name="framer-html-plugin" content="disable">
+    <link href="https://framerusercontent.com/images/5cobUGTEj03dPTNLhGrQTXXW7M.png" rel="icon"
+        media="(prefers-color-scheme: light)">
+    <link href="https://framerusercontent.com/images/5cobUGTEj03dPTNLhGrQTXXW7M.png" rel="icon"
+        media="(prefers-color-scheme: dark)">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="3D Image Split  by Framer University">
+    <meta property="og:description" content="3D Image Split  for Framer. Created by Framer University.">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="3D Image Split  by Framer University">
+    <meta name="twitter:description" content="3D Image Split  for Framer. Created by Framer University.">
+    <style data-framer-css-ssr>
+        html,
+        body,
+        #main {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-font-smoothing: inherit;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        figure {
+            margin: 0;
+        }
+
+        body,
+        input,
+        textarea,
+        select,
+        button {
+            font-size: 12px;
+            font-family: sans-serif;
+        }
+
+        body {
+            --token-a042497d-749d-4d03-8d3a-78930210d354: rgb(0, 128, 255);
+            --token-419394a1-565d-4952-8ba3-b4f1eb92339c: #050505;
+            --token-bf966309-2582-4df8-98f4-f091ce81e703: #131415;
+            --token-3edc53ec-2b53-43fb-be53-9e75b862c113: #161819;
+            --token-38c4cf9a-0aa8-4902-ad35-3a2d52d62d05: #1A1C1D;
+            --token-6029dbfc-fbac-430b-a786-4e5dcea7423c: #1E2021;
+            --token-965e5c17-6359-41cc-bd03-2fa4898e2c2b: #222426;
+            --token-88270a27-b998-4d64-94e7-850fa71e2842: #272B2D;
+            --token-6caa153b-31c9-4eaa-bd6e-82180b70617c: #33373A;
+            --token-778dc32c-fa91-4f86-8154-267d5648c0d5: #474D50;
+            --token-82b5832e-a0cf-4abf-84b4-daf77b132a71: #51565A;
+            --token-84002464-baa0-40a1-a1a1-82899aec539a: #9BA1A5;
+            --token-20608b9f-0145-4a1e-b971-ee948ebbb015: #FFFFFF;
+            --token-2809bb06-1427-4fc2-b390-96168fc6b475: rgb(116, 32, 223);
+            --token-e4aca627-11c4-47cb-baf1-d92a36b0f3c6: rgb(152, 107, 239);
+
+            @supports (color: color(display-p3 1 1 1)) {}
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                @supports (color: color(display-p3 1 1 1)) {}
+            }
+        }
+
+        @supports (z-index: calc(infinity)) {
+            #__framer-badge-container {
+                --infinity: infinity;
+            }
+        }
+
+        #__framer-badge-container {
+            position: fixed;
+            bottom: 0;
+            padding: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            pointer-events: none;
+            z-index: calc(var(--infinity, 2147483647));
+        }
+    </style>
+    <style data-framer-font-css>
+        /* latin-ext */
+        @font-face {
+            font-family: 'Instrument Serif';
+            font-style: italic;
+            font-weight: 400;
+            font-display: swap;
+            src: url(https://fonts.gstatic.com/s/instrumentserif/v5/jizHRFtNs2ka5fXjeivQ4LroWlx-6zAjgn7MsNo.woff2) format('woff2');
+            unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+        }
+
+        /* latin */
+        @font-face {
+            font-family: 'Instrument Serif';
+            font-style: italic;
+            font-weight: 400;
+            font-display: swap;
+            src: url(https://fonts.gstatic.com/s/instrumentserif/v5/jizHRFtNs2ka5fXjeivQ4LroWlx-6zAjjH7M.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+
+        /* latin-ext */
+        @font-face {
+            font-family: 'Instrument Serif';
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url(https://fonts.gstatic.com/s/instrumentserif/v5/jizBRFtNs2ka5fXjeivQ4LroWlx-6zsTjmbI.woff2) format('woff2');
+            unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+        }
+
+        /* latin */
+        @font-face {
+            font-family: 'Instrument Serif';
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url(https://fonts.gstatic.com/s/instrumentserif/v5/jizBRFtNs2ka5fXjeivQ4LroWlx-6zUTjg.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+
+        @font-face {
+            font-family: "Inter";
+            src: url("https://framerusercontent.com/assets/5vvr9Vy74if2I6bQbJvbw7SY1pQ.woff2");
+            font-display: swap;
+            font-style: normal;
+            font-weight: 400;
+            unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F
+        }
+
+        @font-face {
+            font-family: "Inter";
+            src: url("https://framerusercontent.com/assets/EOr0mi4hNtlgWNn9if640EZzXCo.woff2");
+            font-display: swap;
+            font-style: normal;
+            font-weight: 400;
+            unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116
+        }
+
+        @font-face {
+            font-family: "Inter";
+            src: url("https://framerusercontent.com/assets/Y9k9QrlZAqio88Klkmbd8VoMQc.woff2");
+            font-display: swap;
+            font-style: normal;
+            font-weight: 400;
+            unicode-range: U+1F00-1FFF
+        }
+
+        @font-face {
+            font-family: "Inter";
+            src: url("https://framerusercontent.com/assets/OYrD2tBIBPvoJXiIHnLoOXnY9M.woff2");
+            font-display: swap;
+            font-style: normal;
+            font-weight: 400;
+            unicode-range: U+0370-03FF
+        }
+
+        @font-face {
+            font-family: "Inter";
+            src: url("https://framerusercontent.com/assets/JeYwfuaPfZHQhEG8U5gtPDZ7WQ.woff2");
+            font-display: swap;
+            font-style: normal;
+            font-weight: 400;
+            unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF
+        }
+
+        @font-face {
+            font-family: "Inter";
+            src: url("https://framerusercontent.com/assets/GrgcKwrN6d3Uz8EwcLHZxwEfC4.woff2");
+            font-display: swap;
+            font-style: normal;
+            font-weight: 400;
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2070, U+2074-207E, U+2080-208E, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
+        }
+
+        @font-face {
+            font-family: "Inter";
+            src: url("https://framerusercontent.com/assets/b6Y37FthZeALduNqHicBT6FutY.woff2");
+            font-display: swap;
+            font-style: normal;
+            font-weight: 400;
+            unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB
+        }
+
+        @font-face {
+            font-family: "Instrument Serif Placeholder";
+            src: local("Times New Roman");
+            ascent-override: 117.87%;
+            descent-override: 36.91%;
+            line-gap-override: 0.00%;
+            size-adjust: 83.99%
+        }
+
+        @font-face {
+            font-family: "Inter Placeholder";
+            src: local("Arial");
+            ascent-override: 89.79%;
+            descent-override: 22.36%;
+            line-gap-override: 0.00%;
+            size-adjust: 107.89%
+        }
+    </style>
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <!-- Start of headEnd -->
+
+    <!-- End of headEnd -->
+</head>
+
+<body>
+    <script async src="https://events.framer.com/script?v=2"
+        data-fid="6e35c7e91d0ad0f408e2f484e485ac07733bd48dc0e730951b9f177c3817c9c4" data-no-nt></script>
+    <!-- Start of bodyStart -->
+
+    <!-- End of bodyStart -->
+    <script data-relative-date-script="global">!function () {
+            var c = new Map; function p(e, t, n) { let r = [n, { numeric: t, style: e }], o = JSON.stringify(r), s = c.get(o); if (s) return s; let i = new Intl.RelativeTimeFormat(...r); return c.set(o, i), i } function D(e, t, n, a, r, o, s) { let i = U(e, t, n), d = F(e, t, i), u = p(a, r, s).format(d, i); return o ? R(u) : u } function R(e) { return e.charAt(0).toUpperCase() + e.slice(1) } function U(e, t, n) { if (n !== "auto") return n; let a = T(e, t); if (Math.abs(a) <= 7) return "day"; let r = g(e, t); if (Math.abs(r) <= 4) return "week"; let o = v(e, t); return Math.abs(o) <= 12 ? "month" : "year" } var h = 1e3, y = 6e4, C = 36e5, M = 864e5, w = 6048e5; function F(e, t, n) { let a = e.getTime() - t.getTime(); switch (n) { case "second": return Math.trunc(a / h); case "minute": return Math.trunc(a / y); case "hour": return Math.trunc(a / C); case "day": return T(e, t); case "week": return g(e, t); case "month": return v(e, t); case "quarter": return _(e, t); case "year": return x(e, t) }let r = n } function l(e) { let t = new Date(e); return t.setUTCHours(0, 0, 0, 0), t } function T(e, t) { let n = l(e).getTime(), a = l(t).getTime(); return Math.round((n - a) / M) } function f(e) { let t = new Date(e), n = t.getUTCDay(), a = (n < 1 ? 7 : 0) + n - 1; return t.setUTCDate(t.getUTCDate() - a), t.setUTCHours(0, 0, 0, 0), t } function g(e, t) { let n = f(e).getTime(), a = f(t).getTime(); return Math.round((n - a) / w) } function v(e, t) { let n = e.getUTCFullYear() - t.getUTCFullYear(), a = e.getUTCMonth() - t.getUTCMonth(); return n * 12 + a } function m(e) { let t = e.getUTCMonth(); return Math.trunc(t / 3) } function _(e, t) { let n = e.getUTCFullYear() - t.getUTCFullYear(), a = m(e) - m(t); return n * 4 + a } function x(e, t) { return e.getUTCFullYear() - t.getUTCFullYear() } window.__framer_formatRelativeDate = D;
+        }()</script>
+    <div id="main"></div>
+    <script>!function () {
+            var w = "framer_variant"; function u(a, r) { let e = r.indexOf("#"), t = e === -1 ? r : r.substring(0, e), o = e === -1 ? "" : r.substring(e), n = t.indexOf("?"), h = n === -1 ? t : t.substring(0, n), d = n === -1 ? "" : t.substring(n), s = new URLSearchParams(d), m = new URLSearchParams(a); for (let [i, l] of m) s.has(i) || i !== w && s.append(i, l); let c = s.toString(); return c === "" ? t + o : h + "?" + c + o } var g = 'div#main a[href^="#"],div#main a[href^="/"],div#main a[href^="."]', f = "div#main a[data-framer-preserve-params]", S = document.currentScript?.hasAttribute("data-preserve-internal-params"); if (window.location.search && !navigator.webdriver && !/bot|-google|google-|yandex|ia_archiver|crawl|spider/iu.test(navigator.userAgent)) { let a = document.querySelectorAll(S ? `${g},${f}` : f); for (let r of a) { let e = u(window.location.search, r.href); r.setAttribute("href", e) } }
+        }()</script>
+
+    <div id="__framer-badge-container"><!--$--><!--$--><!--$--><a
+            class="framer-6jWyo framer-n0ccwk framer-v-n0ccwk framer-bmpgw8 __framer-badge"
+            data-framer-appear-id="n0ccwk" data-framer-name="Light" data-nosnippet="true"
+            style="will-change:transform;pointer-events:auto;opacity:0.001;transform:translateY(10px)"
+            href="https://www.framer.com" rel="noopener"
+            title="Create a free website with Framer, the website builder loved by startups, designers and agencies.">
+            <div class="framer-13yxzio" data-framer-name="Backdrop"
+                style="background-color:rgb(255, 255, 255);border-bottom-left-radius:10px;border-bottom-right-radius:10px;border-top-left-radius:10px;border-top-right-radius:10px;box-shadow:0px 0.6021873017743928px 1.5656869846134214px -1.5px rgba(0, 0, 0, 0.17), 0px 2.288533303243457px 5.950186588432988px -3px rgba(0, 0, 0, 0.14), 0px 10px 26px -4.5px rgba(0, 0, 0, 0.02)">
+            </div>
+            <div class="framer-19yaanm" data-framer-name="Content" style="transform:translate(-50%, -50%)">
+                <div class="framer-1kflzx5">
+                    <div data-framer-name="Logo" class="framer-hcsc7 framer-e50co"
+                        style="--1bd4d3i:rgb(0, 0, 0);--otdjsv:rgb(0, 0, 0);transform:translateX(-50%)"></div>
+                </div><!--$-->
+                <p style="position:absolute;transform:scale(0.001)">Create a free website with Framer, the website
+                    builder loved by startups, designers and agencies.</p>
+                <div data-framer-name="Text" class="framer-g7oZR framer-1um7t9d"
+                    style="--1bd4d3i:rgb(0, 0, 0);--otdjsv:rgb(0, 0, 0)"></div><!--/$-->
+            </div>
+            <div class="framer-j4ugry" data-framer-name="Bottom"
+                style="mask:linear-gradient(180deg, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%) add;-webkit-mask:linear-gradient(180deg, rgba(0,0,0,0) 65%, rgba(0,0,0,1) 100%) add;border-bottom-left-radius:11px;border-bottom-right-radius:11px;border-top-left-radius:11px;border-top-right-radius:11px;box-shadow:inset 0px 0px 0px 1px rgb(0, 0, 0);opacity:0.06">
+            </div>
+            <div class="framer-jnuwbw" data-framer-name="Border"
+                style="border-bottom-left-radius:11px;border-bottom-right-radius:11px;border-top-left-radius:11px;border-top-right-radius:11px;box-shadow:inset 0px 0px 0px 1px rgb(0, 0, 0);opacity:0.04">
+            </div>
+        </a><!--/$--><!--/$--><!--/$--></div>
+    <script data-framer-appear-animation="no-preference"></script>
+    <script>typeof document < "u" && (window.process = { ...window.process, env: { ...window.process?.env, NODE_ENV: "production" } });</script>
+    <link rel="modulepreload" fetchpriority="low"
+        href="https://framerusercontent.com/sites/2XI6WGl6JowzG6JYRWZtZ1/react.G3EGc0ga.mjs">
+    <link rel="modulepreload" fetchpriority="low"
+        href="https://framerusercontent.com/sites/2XI6WGl6JowzG6JYRWZtZ1/rolldown-runtime.D3cOTcPh.mjs">
+    <link rel="modulepreload" fetchpriority="low"
+        href="https://framerusercontent.com/sites/2XI6WGl6JowzG6JYRWZtZ1/framer.C_wZ8CG9.mjs">
+    <link rel="modulepreload" fetchpriority="low"
+        href="https://framerusercontent.com/sites/2XI6WGl6JowzG6JYRWZtZ1/motion.Dy7oBmdm.mjs">
+    <script type="module" async data-framer-bundle="main" fetchPriority="low"
+        src="https://framerusercontent.com/sites/2XI6WGl6JowzG6JYRWZtZ1/script_main.DU_wemJ8.mjs"></script>
     <!-- Start of bodyEnd -->
 
     <!-- End of bodyEnd -->
