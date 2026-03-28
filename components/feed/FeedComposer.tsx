@@ -4,17 +4,25 @@ import { useState, useRef } from "react";
 import { Image, Video, BarChart3, Link2, X, Send, Sparkles } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
-
-const CURRENT_USER = { name: "Aarav Mehta", initials: "AM", color: "from-amber-400/40 to-orange-400/30" };
+import { useUserProfile } from "@/hooks/use-user-profile";
 
 interface FeedComposerProps {
   onSubmit?: (content: string, type: string) => void;
 }
 
 export function FeedComposer({ onSubmit }: FeedComposerProps) {
+  const { user, loading } = useUserProfile();
   const [content, setContent] = useState("");
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedType, setSelectedType] = useState<string | null>(null);
+
+  // Get initials for avatar fallback
+  const initials = user?.name
+    ?.split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2) || "US";
 
   const handleSubmit = () => {
     if (!content.trim()) return;
@@ -37,10 +45,10 @@ export function FeedComposer({ onSubmit }: FeedComposerProps) {
       <div className="relative p-5">
         <div className="flex items-start gap-3">
           <div className="relative shrink-0">
-            <div className={cn("absolute -inset-0.5 rounded-full bg-gradient-to-r blur-sm opacity-40", CURRENT_USER.color)} />
+            <div className={cn("absolute -inset-0.5 rounded-full bg-gradient-to-r blur-sm opacity-40 from-amber-400/40 to-orange-400/30")} />
             <Avatar className="relative h-10 w-10 border-2 border-background shadow-md">
-              <AvatarImage src="/avatar.jpg" alt={CURRENT_USER.name} />
-              <AvatarFallback className={cn("text-xs font-bold bg-gradient-to-br", CURRENT_USER.color)}>{CURRENT_USER.initials}</AvatarFallback>
+              <AvatarImage src={user?.profilePic || "/avatar.jpg"} alt={user?.name || "User"} />
+              <AvatarFallback className={cn("text-xs font-bold bg-gradient-to-br from-amber-400/40 to-orange-400/30")}>{initials}</AvatarFallback>
             </Avatar>
           </div>
           <div className="flex-1">

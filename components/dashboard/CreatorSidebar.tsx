@@ -27,6 +27,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import { useUserProfile } from "@/hooks/use-user-profile";
 
 // Types
 interface NavItem {
@@ -164,11 +165,20 @@ const pulseVariants = {
 
 export function CreatorSidebar() {
   const pathname = usePathname();
+  const { user, loading } = useUserProfile();
   const [activeTab, setActiveTab] = useState("");
   const [showNotifications, setShowNotifications] = useState(false);
   const [showMessages, setShowMessages] = useState(false);
   const [selectedChat, setSelectedChat] = useState<Conversation | null>(null);
   const [showProfileDrawer, setShowProfileDrawer] = useState(false);
+
+  // Get initials for avatar fallback
+  const initials = user?.name
+    ?.split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2) || "US";
 
   useEffect(() => {
     setActiveTab(pathname);
@@ -273,11 +283,11 @@ export function CreatorSidebar() {
                     <div className="relative">
                       <Avatar className="w-14 h-14 border-2 border-white shadow-md">
                         <AvatarImage
-                          src="https://i.pravatar.cc/150?u=aarav"
-                          alt="Aarav Mehta"
+                          src={user?.profilePic || `https://i.pravatar.cc/150?u=${user?.email || 'user'}`}
+                          alt={user?.name || "User"}
                         />
                         <AvatarFallback className="bg-gradient-to-br from-[#2D4A6E] to-[#FF8A80] text-white text-lg">
-                          AM
+                          {initials}
                         </AvatarFallback>
                       </Avatar>
                       <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[#FF8A80] via-[#FFB6C1] to-[#FF8A80] opacity-0 group-hover:opacity-40 blur-sm transition-opacity duration-500" />
@@ -285,7 +295,7 @@ export function CreatorSidebar() {
 
                     <div className="flex-1 min-w-0">
                       <span className="font-semibold text-[#2D4A6E] block">
-                        Aarav Mehta
+                        {loading ? "Loading..." : user?.name || "User"}
                       </span>
                       <Badge
                         variant="secondary"
@@ -835,13 +845,13 @@ export function CreatorSidebar() {
               <div className="p-6">
                 <div className="flex items-center gap-4 mb-4">
                   <Avatar className="w-20 h-20 border-4 border-white shadow-lg">
-                    <AvatarImage src="https://i.pravatar.cc/150?u=aarav" />
+                    <AvatarImage src={user?.profilePic || `https://i.pravatar.cc/150?u=${user?.email || 'user'}`} />
                     <AvatarFallback className="bg-gradient-to-br from-[#2D4A6E] to-[#FF8A80] text-white text-2xl">
-                      AM
+                      {initials}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <h3 className="font-bold text-lg text-[#2D4A6E]">Aarav Mehta</h3>
+                    <h3 className="font-bold text-lg text-[#2D4A6E]">{user?.name || "User"}</h3>
                     <Badge className="mt-1 bg-[#FF8A80]/20 text-[#FF8A80] border-[#FF8A80]/30">
                       Creator
                     </Badge>

@@ -5,8 +5,7 @@ import { Search, Bell, MessageCircle, Sun, Moon, Menu, X, Heart, User, MessageSq
 import { useTheme } from "next-themes";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
-
-const CURRENT_USER = { name: "Aarav Mehta", initials: "AM", color: "from-amber-400/40 to-orange-400/30" };
+import { useUserProfile } from "@/hooks/use-user-profile";
 
 // ============================================
 // NOTIFICATION DATA
@@ -32,11 +31,20 @@ interface FeedTopBarProps { collapsed: boolean; onMenuClick?: () => void; }
 
 export function FeedTopBar({ collapsed, onMenuClick }: FeedTopBarProps) {
   const { theme, setTheme } = useTheme();
+  const { user, loading } = useUserProfile();
   const [searchFocused, setSearchFocused] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [messagesOpen, setMessagesOpen] = useState(false);
   const [activeConversation, setActiveConversation] = useState<string | null>(null);
   const [notifications, setNotifications] = useState(SAMPLE_NOTIFICATIONS);
+
+  // Get initials for avatar fallback
+  const initials = user?.name
+    ?.split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2) || "US";
 
   const unreadCount = notifications.filter(n => !n.read).length;
 
@@ -248,10 +256,10 @@ export function FeedTopBar({ collapsed, onMenuClick }: FeedTopBarProps) {
 
         {/* User Avatar */}
         <button className="ml-1 group relative">
-          <div className={cn("absolute -inset-0.5 rounded-full bg-gradient-to-r blur-sm opacity-0 group-hover:opacity-60 transition-opacity duration-300", CURRENT_USER.color)} />
+          <div className={cn("absolute -inset-0.5 rounded-full bg-gradient-to-r blur-sm opacity-0 group-hover:opacity-60 transition-opacity duration-300 from-amber-400/40 to-orange-400/30")} />
           <Avatar className="relative h-9 w-9 border-2 border-background shadow-md ring-2 ring-transparent group-hover:ring-primary/20 transition-all duration-200">
-            <AvatarImage src="/avatar.jpg" alt={CURRENT_USER.name} />
-            <AvatarFallback className={cn("text-[10px] font-bold bg-gradient-to-br", CURRENT_USER.color)}>{CURRENT_USER.initials}</AvatarFallback>
+            <AvatarImage src={user?.profilePic || "/avatar.jpg"} alt={user?.name || "User"} />
+            <AvatarFallback className={cn("text-[10px] font-bold bg-gradient-to-br from-amber-400/40 to-orange-400/30")}>{initials}</AvatarFallback>
           </Avatar>
         </button>
       </div>

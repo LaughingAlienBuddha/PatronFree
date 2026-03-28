@@ -30,6 +30,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import { useUserProfile } from "@/hooks/use-user-profile";
 
 // Types
 interface NavItem {
@@ -175,11 +176,20 @@ const pulseVariants = {
 
 export function SupporterSidebar() {
   const pathname = usePathname();
+  const { user, loading } = useUserProfile();
   const [activeTab, setActiveTab] = useState("");
   const [showNotifications, setShowNotifications] = useState(false);
   const [showMessages, setShowMessages] = useState(false);
   const [selectedChat, setSelectedChat] = useState<Conversation | null>(null);
   const [showProfileDrawer, setShowProfileDrawer] = useState(false);
+
+  // Get initials for avatar fallback
+  const initials = user?.name
+    ?.split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2) || "US";
 
   useEffect(() => {
     setActiveTab(pathname);
@@ -292,11 +302,11 @@ export function SupporterSidebar() {
                     <div className="relative">
                       <Avatar className="w-14 h-14 border-2 border-white shadow-md">
                         <AvatarImage
-                          src="https://i.pravatar.cc/150?u=supporter1"
-                          alt="Priya Sharma"
+                          src={user?.profilePic || `https://i.pravatar.cc/150?u=${user?.email || 'supporter'}`}
+                          alt={user?.name || "User"}
                         />
                         <AvatarFallback className="bg-gradient-to-br from-[#7FC7D9] to-[#365486] text-white text-lg">
-                          PS
+                          {initials}
                         </AvatarFallback>
                       </Avatar>
                       {/* Animated glow ring */}
@@ -306,7 +316,7 @@ export function SupporterSidebar() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
                         <span className="font-semibold text-[#0F1035] truncate">
-                          Priya Sharma
+                          {loading ? "Loading..." : user?.name || "User"}
                         </span>
                       </div>
                       <Badge
@@ -930,13 +940,13 @@ export function SupporterSidebar() {
               <div className="p-6">
                 <div className="flex items-center gap-4 mb-4">
                   <Avatar className="w-20 h-20 border-4 border-white shadow-lg">
-                    <AvatarImage src="https://i.pravatar.cc/150?u=supporter1" />
+                    <AvatarImage src={user?.profilePic || `https://i.pravatar.cc/150?u=${user?.email || 'supporter'}`} alt={user?.name || "User"} />
                     <AvatarFallback className="bg-gradient-to-br from-[#7FC7D9] to-[#365486] text-white text-2xl">
-                      PS
+                      {initials}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <h3 className="font-bold text-lg text-[#0F1035]">Priya Sharma</h3>
+                    <h3 className="font-bold text-lg text-[#0F1035]">{user?.name || "User"}</h3>
                     <Badge className="mt-1 bg-gradient-to-r from-rose-100 to-rose-50 text-rose-600 border-rose-200/50">
                       <Heart className="w-3 h-3 mr-1 fill-rose-500" />
                       Supporter

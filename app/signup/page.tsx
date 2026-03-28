@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { HomeLink } from "@/components/home-link";
 import { useState, useEffect, useRef } from "react";
-import { createUserWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth";
+import { signInWithPopup, createUserWithEmailAndPassword, updateProfile, setPersistence, browserLocalPersistence } from "firebase/auth";
 import { auth, googleProvider, githubProvider } from "@/lib/firebase";
 import { formatAuthError } from "@/lib/auth-errors";
 
@@ -509,19 +509,46 @@ export default function SignUpPage() {
           {/* Form */}
           <form className="fields" onSubmit={async (e) => {
             e.preventDefault();
-            if (isLoading) return;
+            
+            if (!firstName || !lastName || !email || !password) {
+              setError("Please fill in all fields");
+              return;
+            }
+            
+            if (password.length < 6) {
+              setError("Password must be at least 6 characters");
+              return;
+            }
+            
+            if (!selectedRole) {
+              setError("Please select a role");
+              return;
+            }
+            
             setIsLoading(true);
             setError("");
-
+            
             try {
-              const res = await createUserWithEmailAndPassword(auth, email, password);
-              if (res.user) {
-                await updateProfile(res.user, { displayName: `${firstName} ${lastName}` });
+              await setPersistence(auth, browserLocalPersistence);
+              
+              // Create user with email and password
+              const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+              
+              // Update profile with display name
+              await updateProfile(userCredential.user, {
+                displayName: `${firstName} ${lastName}`,
+              });
+              
+              // Store role in localStorage for profile creation
+              localStorage.setItem("userRole", selectedRole);
+              
+              // Wait for user profile to be created
+              setTimeout(() => {
                 router.replace("/dashboard");
-                return;
-              }
-            } catch (err: any) {
-              setError(err.message || "Failed to create account");
+              }, 500);
+            } catch (err: unknown) {
+              setError(formatAuthError(err));
+            } finally {
               setIsLoading(false);
             }
           }}>

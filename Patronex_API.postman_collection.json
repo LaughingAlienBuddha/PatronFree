@@ -1,0 +1,336 @@
+{
+  "info": {
+    "name": "Patronex API",
+    "description": "Complete API collection for Patronex backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Signup",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/auth/signup",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "signup"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"role\": \"creator\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/auth/login",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "login"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Verify Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/auth/verify-token",
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "verify-token"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "Get My Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/profile/me",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "me"]
+            }
+          }
+        },
+        {
+          "name": "Get Public Profile",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{BASE_URL}}/profile/public/{{USER_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "public", "{{USER_ID}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/profile/update",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "update"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Smith\",\n  \"bio\": \"Updated bio here\",\n  \"role\": \"developer\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get User Uploads",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{BASE_URL}}/profile/{{USER_ID}}/uploads?limit=20&skip=0",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "{{USER_ID}}", "uploads"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "skip",
+                  "value": "0"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Upload",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/profile/upload/{{UPLOAD_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "upload", "{{UPLOAD_ID}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "File Upload",
+      "item": [
+        {
+          "name": "Upload Profile Picture",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/profile/upload-picture",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "upload-picture"]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "/path/to/image.jpg"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Upload Media File",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/profile/upload-file",
+              "host": ["{{BASE_URL}}"],
+              "path": ["profile", "upload-file"]
+            },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "/path/to/file"
+                },
+                {
+                  "key": "title",
+                  "type": "text",
+                  "value": "My Document"
+                },
+                {
+                  "key": "description",
+                  "type": "text",
+                  "value": "A brief description"
+                },
+                {
+                  "key": "isPublic",
+                  "type": "text",
+                  "value": "true"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Visit Tracking",
+      "item": [
+        {
+          "name": "Track Visit",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/visit/{{PROFILE_USER_ID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["visit", "{{PROFILE_USER_ID}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Visit History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/visit/{{USER_ID}}/history?limit=20&skip=0",
+              "host": ["{{BASE_URL}}"],
+              "path": ["visit", "{{USER_ID}}", "history"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "skip",
+                  "value": "0"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Visit Statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{TOKEN}}"
+              }
+            ],
+            "url": {
+              "raw": "{{BASE_URL}}/visit/{{USER_ID}}/stats",
+              "host": ["{{BASE_URL}}"],
+              "path": ["visit", "{{USER_ID}}", "stats"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:5000/api",
+      "type": "string"
+    },
+    {
+      "key": "TOKEN",
+      "value": "your_jwt_token_here",
+      "type": "string"
+    },
+    {
+      "key": "USER_ID",
+      "value": "user_id_from_signup",
+      "type": "string"
+    },
+    {
+      "key": "PROFILE_USER_ID",
+      "value": "profile_user_id",
+      "type": "string"
+    },
+    {
+      "key": "UPLOAD_ID",
+      "value": "upload_id",
+      "type": "string"
+    }
+  ]
+}
