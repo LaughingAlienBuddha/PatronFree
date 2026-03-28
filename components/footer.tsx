@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { HomeLink } from "@/components/home-link";
 import { Twitter, Github, Linkedin, Youtube } from "lucide-react";
 import { Reveal } from "@/components/reveal";
 
@@ -41,12 +42,12 @@ export function Footer() {
         <div className="grid gap-8 lg:grid-cols-6">
           {/* Brand column */}
           <Reveal as="div" className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-2">
+            <HomeLink className="flex items-center gap-2">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
                 <span className="text-sm font-bold text-primary-foreground">P</span>
               </div>
               <span className="text-xl font-bold tracking-tight">Patronex</span>
-            </Link>
+            </HomeLink>
             <p className="mt-4 max-w-xs text-sm text-muted-foreground">
               Empowering creators and open-source developers with sustainable community
               support.

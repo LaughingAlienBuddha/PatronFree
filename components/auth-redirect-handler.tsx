@@ -7,13 +7,12 @@ import { redirectToDashboard } from "@/lib/auth-navigation";
 
 function isAuthPagePath(): boolean {
   if (typeof window === "undefined") return false;
-  const p = window.location.pathname;
+  const p = window.location.pathname.replace(/\/$/, "") || "/";
   return p.endsWith("/signin") || p.endsWith("/signup");
 }
 
 /**
- * Completes signInWithRedirect (Google/GitHub) and redirects from /signin|/signup
- * when a session appears (OAuth edge cases).
+ * Completes signInWithRedirect (Google/GitHub), then subscribes for email/OAuth edge cases.
  */
 export function AuthRedirectHandler() {
   useEffect(() => {

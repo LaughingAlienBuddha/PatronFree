@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { HomeLink } from "@/components/home-link";
 import { useState, useEffect, useRef } from "react";
 import { signInWithEmailAndPassword, signInWithRedirect } from "firebase/auth";
 import { auth, googleProvider, githubProvider } from "@/lib/firebase";
@@ -510,12 +511,12 @@ export default function SignInPage() {
         <div className="auth-glow" />
 
         {/* ── BACK TO HOME BUTTON ── */}
-        <Link href="/" className="back-btn">
+        <HomeLink className="back-btn">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M19 12H5M12 5l-7 7 7 7" />
           </svg>
           Back to Home
-        </Link>
+        </HomeLink>
 
         {/* ── CARD ── */}
         <div className="auth-card">
