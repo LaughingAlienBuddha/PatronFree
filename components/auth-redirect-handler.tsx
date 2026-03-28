@@ -1,28 +1,58 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { getRedirectResult } from "firebase/auth";
+import { getRedirectResult, onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase";
+import { redirectToDashboard } from "@/lib/auth-navigation";
+
+function isAuthPagePath(): boolean {
+  if (typeof window === "undefined") return false;
+  const p = window.location.pathname;
+  return p.endsWith("/signin") || p.endsWith("/signup");
+}
 
 /**
- * Completes signInWithRedirect (Google/GitHub). Must run once on app load;
- * the redirect result can only be consumed once.
+ * Completes signInWithRedirect (Google/GitHub) and redirects from /signin|/signup
+ * when a session appears (OAuth edge cases).
  */
 export function AuthRedirectHandler() {
-  const router = useRouter();
-
   useEffect(() => {
-    getRedirectResult(auth)
-      .then((result) => {
+    let cancelled = false;
+    let unsub: (() => void) | undefined;
+
+    (async () => {
+      await auth.authStateReady();
+      if (cancelled) return;
+
+      try {
+        const result = await getRedirectResult(auth);
         if (result?.user) {
-          router.replace("/dashboard");
+          redirectToDashboard();
+          return;
         }
-      })
-      .catch(() => {
-        // Ignore missing/expired redirect; normal page loads have no pending redirect
+      } catch {
+        // No pending redirect
+      }
+
+      if (cancelled) return;
+      if (auth.currentUser && isAuthPagePath()) {
+        redirectToDashboard();
+        return;
+      }
+
+      unsub = onAuthStateChanged(auth, (user) => {
+        if (cancelled || !user) return;
+        if (isAuthPagePath()) {
+          redirectToDashboard();
+        }
       });
-  }, [router]);
+    })();
+
+    return () => {
+      cancelled = true;
+      unsub?.();
+    };
+  }, []);
 
   return null;
 }

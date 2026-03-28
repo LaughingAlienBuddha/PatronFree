@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
-import { createUserWithEmailAndPassword, signInWithRedirect, updateProfile, onAuthStateChanged } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithRedirect, updateProfile } from "firebase/auth";
 import { auth, googleProvider, githubProvider } from "@/lib/firebase";
 import { formatAuthError } from "@/lib/auth-errors";
+import { redirectToDashboard } from "@/lib/auth-navigation";
 
 const ROLES = [
   { id: "creator",   label: "Creator",   icon: "✦",    desc: "Share your work" },
@@ -14,7 +14,6 @@ const ROLES = [
 ];
 
 export default function SignUpPage() {
-  const router = useRouter();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -24,16 +23,6 @@ export default function SignUpPage() {
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  // Automatically redirect if already logged in or returning from OAuth redirect
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        router.push("/dashboard");
-      }
-    });
-    return () => unsubscribe();
-  }, [router]);
 
   // Canvas particle animation
   useEffect(() => {
@@ -519,7 +508,7 @@ export default function SignUpPage() {
               const res = await createUserWithEmailAndPassword(auth, email, password);
               if (res.user) {
                 await updateProfile(res.user, { displayName: `${firstName} ${lastName}` });
-                router.push("/dashboard");
+                redirectToDashboard();
               }
             } catch (err: any) {
               setError(err.message || "Failed to create account");

@@ -2,13 +2,12 @@
 
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
-import { signInWithEmailAndPassword, signInWithRedirect, onAuthStateChanged } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithRedirect } from "firebase/auth";
 import { auth, googleProvider, githubProvider } from "@/lib/firebase";
 import { formatAuthError } from "@/lib/auth-errors";
+import { redirectToDashboard } from "@/lib/auth-navigation";
 
 export default function SignInPage() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -16,15 +15,6 @@ export default function SignInPage() {
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        router.push("/dashboard");
-      }
-    });
-    return () => unsubscribe();
-  }, [router]);
 
   useEffect(() => {
     setMounted(true);
@@ -597,7 +587,7 @@ export default function SignInPage() {
             try {
               const res = await signInWithEmailAndPassword(auth, email, password);
               if (res.user) {
-                router.push("/dashboard");
+                redirectToDashboard();
               }
             } catch (err: any) {
               setError("Invalid email or password");
