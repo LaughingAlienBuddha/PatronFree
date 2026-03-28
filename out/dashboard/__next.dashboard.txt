@@ -1,7 +1,7 @@
 1:"$Sreact.fragment"
-2:I[53701,["/_next/static/chunks/0-mo-vwb9lvdb.js","/_next/static/chunks/0jw93ff_ys~d~.js","/_next/static/chunks/088a~ipw97_gr.js"],"ClientSegmentRoot"]
-3:I[25143,["/_next/static/chunks/0-mo-vwb9lvdb.js","/_next/static/chunks/0jw93ff_ys~d~.js","/_next/static/chunks/088a~ipw97_gr.js","/_next/static/chunks/03s0lpk-jks3o.js","/_next/static/chunks/0plwowz3.zd58.js"],"default"]
-4:I[64217,["/_next/static/chunks/0-mo-vwb9lvdb.js","/_next/static/chunks/0jw93ff_ys~d~.js","/_next/static/chunks/088a~ipw97_gr.js"],"default"]
-5:I[69978,["/_next/static/chunks/0-mo-vwb9lvdb.js","/_next/static/chunks/0jw93ff_ys~d~.js","/_next/static/chunks/088a~ipw97_gr.js"],"default"]
-0:{"rsc":["$","$1","c",{"children":[[["$","script","script-0",{"src":"/_next/static/chunks/03s0lpk-jks3o.js","async":true}],["$","script","script-1",{"src":"/_next/static/chunks/0plwowz3.zd58.js","async":true}]],["$","$L2",null,{"Component":"$3","slots":{"children":["$","$L4",null,{"parallelRouterKey":"children","template":["$","$L5",null,{}]}]},"serverProvidedParams":{"params":{},"promises":["$@6"]}}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"MANDGygc8yi4EOO4SjsJF"}
+2:I[92825,["/_next/static/chunks/0926jh7iug_tv.js","/_next/static/chunks/07zzujf4g~glr.js","/_next/static/chunks/00-csyj9a6t-x.js"],"ClientSegmentRoot"]
+3:I[82391,["/_next/static/chunks/0926jh7iug_tv.js","/_next/static/chunks/07zzujf4g~glr.js","/_next/static/chunks/00-csyj9a6t-x.js","/_next/static/chunks/14_q3g2gu5ee1.js","/_next/static/chunks/12t-m13ooxgct.js"],"default"]
+4:I[39756,["/_next/static/chunks/0926jh7iug_tv.js","/_next/static/chunks/07zzujf4g~glr.js","/_next/static/chunks/00-csyj9a6t-x.js"],"default"]
+5:I[37457,["/_next/static/chunks/0926jh7iug_tv.js","/_next/static/chunks/07zzujf4g~glr.js","/_next/static/chunks/00-csyj9a6t-x.js"],"default"]
+0:{"rsc":["$","$1","c",{"children":[[["$","script","script-0",{"src":"/_next/static/chunks/14_q3g2gu5ee1.js","async":true}],["$","script","script-1",{"src":"/_next/static/chunks/12t-m13ooxgct.js","async":true}]],["$","$L2",null,{"Component":"$3","slots":{"children":["$","$L4",null,{"parallelRouterKey":"children","template":["$","$L5",null,{}]}]},"serverProvidedParams":{"params":{},"promises":["$@6"]}}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"YEYZYQ9EY91MS9x2RYCXY"}
 6:"$0:rsc:props:children:1:props:serverProvidedParams:params"
