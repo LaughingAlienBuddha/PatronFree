@@ -4,13 +4,15 @@ import { useState } from "react";
 import { FeedSidebar } from "@/components/feed/FeedSidebar";
 import { FeedTopBar } from "@/components/feed/FeedTopBar";
 import { cn } from "@/lib/utils";
+import { AuthGuard } from "@/components/auth-guard";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   return (
-    <div className="flex min-h-screen w-full bg-background text-foreground">
-      <FeedSidebar collapsed={sidebarCollapsed} setCollapsed={setSidebarCollapsed} />
+    <AuthGuard>
+      <div className="flex min-h-screen w-full bg-background text-foreground">
+        <FeedSidebar collapsed={sidebarCollapsed} setCollapsed={setSidebarCollapsed} />
 
       {/* Main content wrapper — shifts right based on sidebar state */}
       <div
@@ -39,6 +41,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
         </main>
       </div>
-    </div>
+      </div>
+    </AuthGuard>
   );
 }
