@@ -1,181 +1,260 @@
 "use client";
 
-import { Sparkles, Terminal, Code2, Settings, Image, MessageSquare } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  ArrowRight,
+  Code2,
+  Sparkles,
+  Terminal,
+  Braces,
+  Cpu,
+  Palette,
+  PenTool,
+  Video,
+  Layers,
+} from "lucide-react";
+import Link from "next/link";
+import { Reveal } from "@/components/reveal";
 import * as React from "react";
 
-// Generate 30 random stars with varying sizes and opacities
-const STARS = Array.from({ length: 30 }, (_, i) => ({
-  id: i,
-  size: 1 + Math.random() * 1.5, // 1px to 2.5px
-  opacity: [0.15, 0.25, 0.4, 0.6][Math.floor(Math.random() * 4)],
-  left: Math.random() * 100,
-  top: Math.random() * 100,
-}));
-
-type FeatureCard = {
+type HeroCard = {
   id: string;
-  type: "developer" | "creator";
+  label: string;
   title: string;
-  subtitle: string;
   icon: React.ComponentType<{ className?: string }>;
+  gradient: string;
 };
 
-const FEATURE_CARDS: FeatureCard[] = [
+const HERO_CARDS: HeroCard[] = [
   {
-    id: "1",
-    type: "developer",
+    id: "dev-1",
+    label: "Developers",
     title: "Terminal-first workflows",
-    subtitle: "Code, terminals, projects",
     icon: Terminal,
+    gradient: "from-secondary/30 via-primary/20 to-transparent",
   },
   {
-    id: "2",
-    type: "developer",
+    id: "dev-2",
+    label: "Developers",
     title: "Ship open-source faster",
-    subtitle: "Code, terminals, projects",
-    icon: Code2,
+    icon: Braces,
+    gradient: "from-primary/35 via-secondary/15 to-transparent",
   },
   {
-    id: "3",
-    type: "developer",
+    id: "dev-3",
+    label: "Developers",
     title: "Fund critical projects",
-    subtitle: "Code, terminals, projects",
-    icon: Settings,
+    icon: Cpu,
+    gradient: "from-secondary/25 via-primary/25 to-transparent",
   },
   {
-    id: "4",
-    type: "creator",
+    id: "cre-1",
+    label: "Creators",
     title: "Design. Publish. Grow.",
-    subtitle: "Art, design, content",
-    icon: Image,
+    icon: Palette,
+    gradient: "from-secondary/35 via-primary/15 to-transparent",
   },
   {
-    id: "5",
-    type: "creator",
-    title: "Tell your story",
-    subtitle: "Art, design, content",
-    icon: MessageSquare,
+    id: "cre-2",
+    label: "Creators",
+    title: "Tell stories with content",
+    icon: PenTool,
+    gradient: "from-primary/30 via-secondary/20 to-transparent",
+  },
+  {
+    id: "cre-3",
+    label: "Creators",
+    title: "Cinematic visuals & media",
+    icon: Video,
+    gradient: "from-secondary/30 via-primary/20 to-transparent",
+  },
+  {
+    id: "mix-1",
+    label: "Together",
+    title: "Creators × Developers",
+    icon: Layers,
+    gradient: "from-primary/35 via-secondary/15 to-transparent",
   },
 ];
 
 export function HeroSection() {
+  const viewportRef = React.useRef<HTMLDivElement | null>(null);
+  const cardRefs = React.useRef<Array<HTMLDivElement | null>>([]);
+  const [activeIdx, setActiveIdx] = React.useState<number>(0);
+
+  React.useEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+
+    let raf = 0;
+    let last = 0;
+
+    const tick = (t: number) => {
+      if (t - last > 120) {
+        last = t;
+        const vp = viewport.getBoundingClientRect();
+        const centerX = vp.left + vp.width / 2;
+
+        let best = { idx: 0, dist: Number.POSITIVE_INFINITY };
+        for (let i = 0; i < cardRefs.current.length; i++) {
+          const el = cardRefs.current[i];
+          if (!el) continue;
+          const r = el.getBoundingClientRect();
+          const x = r.left + r.width / 2;
+          const d = Math.abs(x - centerX);
+          if (d < best.dist) best = { idx: i, dist: d };
+        }
+        setActiveIdx(best.idx);
+      }
+      raf = requestAnimationFrame(tick);
+    };
+
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-[#0B1229]">
-      {/* Subtle radial gradient glow - centered slightly above middle */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background: "radial-gradient(600px circle at 50% 40%, rgba(26, 47, 94, 0.6), transparent 70%)",
-        }}
-      />
-
-      {/* Static star particles */}
-      <div className="pointer-events-none absolute inset-0 z-0">
-        {STARS.map((star) => (
-          <div
-            key={star.id}
-            className="absolute rounded-full bg-white"
-            style={{
-              width: `${star.size}px`,
-              height: `${star.size}px`,
-              opacity: star.opacity,
-              left: `${star.left}%`,
-              top: `${star.top}%`,
-            }}
-          />
-        ))}
+    <section className="relative overflow-hidden px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+      {/* Immersive background */}
+      <div className="absolute inset-0 hero-mesh" />
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(800px_420px_at_50%_55%,rgba(127,199,217,0.16),transparent_60%)]" />
+        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/30 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/45 to-transparent" />
       </div>
 
-      {/* Hero Content Area */}
-      <div className="relative z-10 flex flex-col items-center px-4 pt-[120px] text-center">
-        {/* Badge / Pill tag */}
-        <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-4 py-1.5">
-          <Sparkles className="h-3.5 w-3.5 text-[#4DD9C0]" />
-          <span className="text-[13px] font-normal text-white/65">
-            Creator + Developer powered funding
-          </span>
-        </div>
-
-        {/* Main Heading */}
-        <h1 className="flex flex-col items-center">
-          <span className="block text-[76px] font-extrabold uppercase leading-[1.05] tracking-[-1px] text-white">
-            FUND THE CODE,
-          </span>
-          <span
-            className="block text-[76px] font-extrabold uppercase leading-[1.05] tracking-[-1px]"
-            style={{
-              background: "linear-gradient(90deg, #4DD9C0 0%, #7EC8E3 60%, #A8D8F0 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
+      <div className="relative mx-auto max-w-7xl">
+        <div className="flex flex-col items-center text-center">
+          {/* Badge */}
+          <Reveal
+            as="div"
+            className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-white/80 shadow-[0_10px_30px_-18px_rgba(0,0,0,0.65)] backdrop-blur-md"
           >
-            FUEL THE CREATOR
-          </span>
-        </h1>
+            <Sparkles className="h-4 w-4 text-secondary" />
+            <span>Creator + Developer powered funding</span>
+          </Reveal>
 
-        {/* Subheading / Description */}
-        <p className="mt-6 max-w-[560px] text-center text-lg font-normal leading-[1.65] text-white/55">
-          A premium platform where supporters fund open-source builders and creators—with
-          beautiful discovery, clean UX, and cinematic momentum.
-        </p>
-
-        {/* Feature Cards Row - Horizontal Scrollable */}
-        <div className="mt-14 w-full">
-          <div
-            className="flex gap-4 overflow-x-auto px-20 pb-4 scrollbar-hide"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          {/* Headline */}
+          <Reveal
+            as="h1"
+            delayMs={80}
+            className="max-w-5xl text-balance text-4xl font-extrabold uppercase tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
           >
-            {FEATURE_CARDS.map((card) => {
-              const Icon = card.icon;
-              const isDeveloper = card.type === "developer";
+            <span className="inline-block bg-gradient-to-r from-white via-white/90 to-white bg-clip-text text-transparent drop-shadow-[0_0_24px_rgba(127,199,217,0.22)]">
+              FUND THE CODE,
+            </span>{" "}
+            <span className="inline-block bg-gradient-to-r from-secondary via-white/90 to-secondary bg-clip-text text-transparent drop-shadow-[0_0_28px_rgba(127,199,217,0.35)]">
+              FUEL THE CREATOR
+            </span>
+          </Reveal>
 
-              return (
-                <div
-                  key={card.id}
-                  className="group flex h-[150px] w-[220px] shrink-0 flex-col justify-between rounded-2xl border border-white/[0.09] bg-[#0D1A2E] p-5 shadow-[0_4px_24px_rgba(0,0,0,0.3)] transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-[rgba(77,217,192,0.3)]"
-                >
-                  {/* Top Row */}
-                  <div className="flex items-start justify-between">
-                    {/* Label Pill */}
-                    <div
-                      className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-medium"
-                      style={{
-                        background: isDeveloper ? "rgba(77,217,192,0.12)" : "rgba(167,139,250,0.12)",
-                        color: isDeveloper ? "#4DD9C0" : "#A78BFA",
-                      }}
-                    >
-                      <span
-                        className="h-[5px] w-[5px] rounded-full"
-                        style={{ background: isDeveloper ? "#4DD9C0" : "#A78BFA" }}
-                      />
-                      {isDeveloper ? "Developers" : "Creators"}
-                    </div>
+          {/* Subtext */}
+          <Reveal
+            as="p"
+            delayMs={140}
+            className="mt-6 max-w-2xl text-pretty text-lg text-white/70 sm:text-xl"
+          >
+            A premium platform where supporters fund open-source builders and creators—with
+            beautiful discovery, clean UX, and cinematic momentum.
+          </Reveal>
 
-                    {/* Icon Container */}
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.06]">
-                      <Icon className="h-4 w-4 text-white/50" />
-                    </div>
-                  </div>
+          {/* Dynamic carousel */}
+          <Reveal as="div" delayMs={210} className="relative mt-12 w-full max-w-6xl">
+            {/* Soft neon aura + spotlight */}
+            <div className="pointer-events-none absolute inset-0">
+              <div className="absolute left-1/2 top-1/2 h-56 w-[46rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-secondary/15 blur-3xl" />
+              <div className="absolute left-1/2 top-1/2 h-44 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/10 blur-2xl" />
+            </div>
 
-                  {/* Bottom Section */}
-                  <div className="mt-auto">
-                    <h3 className="mb-1 text-[15px] font-semibold text-white">{card.title}</h3>
-                    <p className="text-xs font-normal text-white/40">{card.subtitle}</p>
-                  </div>
+            <div
+              ref={viewportRef}
+              className="relative overflow-hidden rounded-3xl border border-white/10 bg-black/20 px-2 py-8 shadow-[0_30px_90px_-60px_rgba(0,0,0,0.9)] backdrop-blur-xl sm:px-6"
+              style={{ perspective: "1100px" }}
+            >
+              <div className="mask-image-[linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+                <div className="hero-track gap-4 px-4 sm:gap-6 sm:px-2">
+                  {[...HERO_CARDS, ...HERO_CARDS].map((card, i) => {
+                    const idx = i % HERO_CARDS.length;
+                    const dist = Math.min(
+                      Math.abs(i - activeIdx),
+                      Math.abs(i - (activeIdx + HERO_CARDS.length))
+                    );
+                    const dim = dist >= 3;
+                    const soften = dist === 2;
+                    const isActive = i === activeIdx;
+                    const Icon = card.icon;
+
+                    return (
+                      <div
+                        key={`${card.id}-${i}`}
+                        ref={(el) => {
+                          cardRefs.current[i] = el;
+                        }}
+                        className={[
+                          "group relative h-40 w-[15.5rem] shrink-0 rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-4 text-left text-white/85 backdrop-blur-md",
+                          "transition-[transform,filter,opacity,box-shadow,border-color] duration-300 ease-out",
+                          "hover:-translate-y-1 hover:scale-[1.03] hover:border-secondary/40 hover:shadow-[0_20px_80px_-40px_rgba(127,199,217,0.55)]",
+                          dim ? "opacity-45 blur-[0.7px]" : soften ? "opacity-70" : "opacity-95",
+                          isActive ? "scale-[1.06] border-secondary/45 shadow-[0_30px_120px_-70px_rgba(127,199,217,0.65)]" : "",
+                        ].join(" ")}
+                        style={{
+                          transform: `translateZ(${isActive ? 28 : 0}px) rotateX(1deg) rotateY(${
+                            dist === 0 ? 0 : dist === 1 ? 6 : dist === 2 ? 10 : 12
+                          }deg)`,
+                        }}
+                      >
+                        <div
+                          className={`pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br ${card.gradient}`}
+                        />
+                        <div className="pointer-events-none absolute -inset-2 rounded-3xl bg-secondary/0 blur-2xl transition-opacity duration-300 group-hover:bg-secondary/15" />
+
+                        <div className="relative flex items-start justify-between">
+                          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/25 px-3 py-1 text-[11px] text-white/70">
+                            <span className="h-1.5 w-1.5 rounded-full bg-secondary" />
+                            {card.label}
+                          </div>
+                          <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5">
+                            <Icon className="h-5 w-5 text-white/80" />
+                          </div>
+                        </div>
+
+                        <div className="relative mt-4">
+                          <div className="text-sm font-semibold tracking-tight text-white">
+                            {card.title}
+                          </div>
+                          <div className="mt-1 text-xs text-white/60">
+                            {idx < 3 ? "Code, terminals, projects" : idx < 6 ? "Art, design, content" : "Collaboration"}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-              );
-            })}
-          </div>
+              </div>
+
+              {/* Center-focused glow */}
+              <div className="pointer-events-none absolute left-1/2 top-1/2 h-48 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-secondary/10 blur-3xl" />
+            </div>
+          </Reveal>
+
+          {/* CTA Buttons */}
+          <Reveal as="div" delayMs={260} className="mt-10 flex flex-col gap-4 sm:flex-row">
+            <Button size="lg" className="gap-2 px-8" asChild>
+              <Link href="/signup">
+                Get Started
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="gap-2 px-8 border-white/15 bg-white/5 text-white hover:bg-white/10 hover:border-white/25"
+            >
+              Explore Projects
+            </Button>
+          </Reveal>
         </div>
       </div>
-
-      {/* Bottom Fade Gradient */}
-      <div
-        className="pointer-events-none absolute bottom-0 left-0 right-0 h-20"
-        style={{
-          background: "linear-gradient(to top, #0B1229, transparent)",
-        }}
-      />
     </section>
   );
 }

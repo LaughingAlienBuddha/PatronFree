@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/navbar";
 import { HeroSection } from "@/components/hero-section";
-import { CreatorsDevelopersSection } from "@/components/creators-developers-section";
+import { SlidingCards } from "@/components/sliding-cards";
 import { FeaturesSection } from "@/components/features-section";
 import { AboutSection } from "@/components/about-section";
 import { CTASection } from "@/components/cta-section";
@@ -11,7 +11,7 @@ export default function Home() {
     <main className="min-h-screen">
       <Navbar />
       <HeroSection />
-      <CreatorsDevelopersSection />
+      <SlidingCards />
       <FeaturesSection />
       <AboutSection />
       <CTASection />

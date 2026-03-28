@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -36,33 +37,32 @@ export function Navbar() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   return (
-    <nav className="fixed top-0 z-50 h-16 w-full border-b border-black/[0.07] bg-[#EAF5F1]/80 backdrop-blur-[10px]">
+    <nav className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/65 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#0F1A38]">
-            <span className="text-base font-bold text-white">P</span>
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary shadow-sm shadow-primary/20">
+            <span className="text-sm font-bold text-primary-foreground">P</span>
           </div>
-          <span className="text-base font-semibold text-[#0F1A38]">Patronex</span>
+          <span className="text-xl font-bold tracking-tight">Patronex</span>
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden items-center gap-8 md:flex">
+        <div className="hidden items-center gap-1 md:flex">
           {/* Creators Dropdown */}
           <div
             className="relative"
             onMouseEnter={() => setOpenDropdown("creators")}
             onMouseLeave={() => setOpenDropdown(null)}
           >
-            <button className="group flex items-center gap-1 text-sm font-medium text-[#1A2B4A] transition-colors hover:text-[#0B1229]">
+            <button className="ui-navlink flex items-center gap-1">
               Creators
               <ChevronDown
                 className={cn(
-                  "h-3.5 w-3.5 transition-transform duration-200",
+                  "h-4 w-4 transition-transform duration-200",
                   openDropdown === "creators" && "rotate-180"
                 )}
               />
-              <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-[#4DD9C0] transition-all duration-200 group-hover:w-full" />
             </button>
             <div
               className={cn(
@@ -72,12 +72,12 @@ export function Navbar() {
                   : "pointer-events-none -translate-y-2 opacity-0"
               )}
             >
-              <div className="w-56 rounded-xl border border-black/5 bg-white/95 p-2 shadow-lg backdrop-blur-md">
+              <div className="ui-dropdown w-56">
                 {creatorsDropdown.map((item) => (
                   <Link
                     key={item.label}
                     href={item.href}
-                    className="block rounded-lg px-4 py-2.5 text-sm text-[#1A2B4A]/80 hover:bg-[#EAF5F1]/60 hover:text-[#0B1229]"
+                    className="block rounded-lg px-4 py-2.5 text-sm text-foreground/80 hover:bg-muted/60 hover:text-foreground"
                   >
                     {item.label}
                   </Link>
@@ -92,15 +92,14 @@ export function Navbar() {
             onMouseEnter={() => setOpenDropdown("developers")}
             onMouseLeave={() => setOpenDropdown(null)}
           >
-            <button className="group flex items-center gap-1 text-sm font-medium text-[#1A2B4A] transition-colors hover:text-[#0B1229]">
+            <button className="ui-navlink flex items-center gap-1">
               Developers
               <ChevronDown
                 className={cn(
-                  "h-3.5 w-3.5 transition-transform duration-200",
+                  "h-4 w-4 transition-transform duration-200",
                   openDropdown === "developers" && "rotate-180"
                 )}
               />
-              <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-[#4DD9C0] transition-all duration-200 group-hover:w-full" />
             </button>
             <div
               className={cn(
@@ -110,12 +109,12 @@ export function Navbar() {
                   : "pointer-events-none -translate-y-2 opacity-0"
               )}
             >
-              <div className="w-56 rounded-xl border border-black/5 bg-white/95 p-2 shadow-lg backdrop-blur-md">
+              <div className="ui-dropdown w-56">
                 {developersDropdown.map((item) => (
                   <Link
                     key={item.label}
                     href={item.href}
-                    className="block rounded-lg px-4 py-2.5 text-sm text-[#1A2B4A]/80 hover:bg-[#EAF5F1]/60 hover:text-[#0B1229]"
+                    className="block rounded-lg px-4 py-2.5 text-sm text-foreground/80 hover:bg-muted/60 hover:text-foreground"
                   >
                     {item.label}
                   </Link>
@@ -130,15 +129,14 @@ export function Navbar() {
             onMouseEnter={() => setOpenDropdown("supporters")}
             onMouseLeave={() => setOpenDropdown(null)}
           >
-            <button className="group flex items-center gap-1 text-sm font-medium text-[#1A2B4A] transition-colors hover:text-[#0B1229]">
+            <button className="ui-navlink flex items-center gap-1">
               Supporters
               <ChevronDown
                 className={cn(
-                  "h-3.5 w-3.5 transition-transform duration-200",
+                  "h-4 w-4 transition-transform duration-200",
                   openDropdown === "supporters" && "rotate-180"
                 )}
               />
-              <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-[#4DD9C0] transition-all duration-200 group-hover:w-full" />
             </button>
             <div
               className={cn(
@@ -148,12 +146,12 @@ export function Navbar() {
                   : "pointer-events-none -translate-y-2 opacity-0"
               )}
             >
-              <div className="w-56 rounded-xl border border-black/5 bg-white/95 p-2 shadow-lg backdrop-blur-md">
+              <div className="ui-dropdown w-56">
                 {supportersDropdown.map((item) => (
                   <Link
                     key={item.label}
                     href={item.href}
-                    className="block rounded-lg px-4 py-2.5 text-sm text-[#1A2B4A]/80 hover:bg-[#EAF5F1]/60 hover:text-[#0B1229]"
+                    className="block rounded-lg px-4 py-2.5 text-sm text-foreground/80 hover:bg-muted/60 hover:text-foreground"
                   >
                     {item.label}
                   </Link>
@@ -164,43 +162,31 @@ export function Navbar() {
 
           <Link
             href="#features"
-            className="group relative text-sm font-medium text-[#1A2B4A] transition-colors hover:text-[#0B1229]"
+            className="ui-navlink"
           >
             Features
-            <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-[#4DD9C0] transition-all duration-200 group-hover:w-full" />
           </Link>
           <Link
             href="#about"
-            className="group relative text-sm font-medium text-[#1A2B4A] transition-colors hover:text-[#0B1229]"
+            className="ui-navlink"
           >
             About Us
-            <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-[#4DD9C0] transition-all duration-200 group-hover:w-full" />
           </Link>
         </div>
 
         {/* Desktop CTA */}
-        <div className="hidden items-center gap-4 md:flex">
-          <Link
-            href="/signin"
-            className="text-sm font-medium text-[#1A2B4A] transition-colors hover:text-[#0B1229]"
-          >
-            Sign In
-          </Link>
-          <Link
-            href="/signup"
-            className="rounded-lg px-[22px] py-[9px] text-sm font-bold text-[#0B1229] transition-all duration-200 hover:scale-[1.02] hover:brightness-110"
-            style={{
-              background: "linear-gradient(90deg, #4DD9C0 0%, #7EC8E3 100%)",
-              boxShadow: "0 0 16px rgba(77, 217, 192, 0.25)",
-            }}
-          >
-            Sign Up
-          </Link>
+        <div className="hidden items-center gap-3 md:flex">
+          <Button variant="ghost" size="sm" asChild>
+            <Link href="/signin">Sign In</Link>
+          </Button>
+          <Button size="sm" asChild>
+            <Link href="/signup">Sign Up</Link>
+          </Button>
         </div>
 
         {/* Mobile Menu Button */}
         <button
-          className="rounded-lg p-2 text-[#1A2B4A] hover:bg-black/5 md:hidden"
+          className="rounded-lg p-2 text-foreground/80 hover:bg-muted/60 hover:text-foreground md:hidden"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -210,7 +196,7 @@ export function Navbar() {
       {/* Mobile Menu */}
       <div
         className={cn(
-          "overflow-hidden border-t border-black/5 bg-[#EAF5F1]/95 backdrop-blur-xl transition-all duration-300 md:hidden",
+          "overflow-hidden border-t border-border/40 bg-background/95 backdrop-blur-xl transition-all duration-300 md:hidden",
           mobileMenuOpen ? "max-h-[32rem]" : "max-h-0"
         )}
       >
@@ -220,7 +206,7 @@ export function Navbar() {
               onClick={() =>
                 setOpenDropdown(openDropdown === "m-creators" ? null : "m-creators")
               }
-              className="flex w-full items-center justify-between rounded-lg px-4 py-2.5 text-sm font-medium text-[#1A2B4A] transition-colors hover:bg-black/5"
+              className="flex w-full items-center justify-between rounded-lg px-4 py-2.5 text-sm font-medium text-foreground/80 transition-colors hover:bg-muted"
             >
               Creators
               <ChevronDown
@@ -236,7 +222,7 @@ export function Navbar() {
                   <Link
                     key={item.label}
                     href={item.href}
-                    className="block rounded-lg px-4 py-2 text-sm text-[#1A2B4A]/70 transition-colors hover:bg-black/5 hover:text-[#0B1229]"
+                    className="block rounded-lg px-4 py-2 text-sm text-foreground/60 transition-colors hover:bg-muted hover:text-foreground"
                   >
                     {item.label}
                   </Link>
@@ -249,7 +235,7 @@ export function Navbar() {
               onClick={() =>
                 setOpenDropdown(openDropdown === "m-developers" ? null : "m-developers")
               }
-              className="flex w-full items-center justify-between rounded-lg px-4 py-2.5 text-sm font-medium text-[#1A2B4A] transition-colors hover:bg-black/5"
+              className="flex w-full items-center justify-between rounded-lg px-4 py-2.5 text-sm font-medium text-foreground/80 transition-colors hover:bg-muted"
             >
               Developers
               <ChevronDown
@@ -265,7 +251,7 @@ export function Navbar() {
                   <Link
                     key={item.label}
                     href={item.href}
-                    className="block rounded-lg px-4 py-2 text-sm text-[#1A2B4A]/70 transition-colors hover:bg-black/5 hover:text-[#0B1229]"
+                    className="block rounded-lg px-4 py-2 text-sm text-foreground/60 transition-colors hover:bg-muted hover:text-foreground"
                   >
                     {item.label}
                   </Link>
@@ -278,7 +264,7 @@ export function Navbar() {
               onClick={() =>
                 setOpenDropdown(openDropdown === "m-supporters" ? null : "m-supporters")
               }
-              className="flex w-full items-center justify-between rounded-lg px-4 py-2.5 text-sm font-medium text-[#1A2B4A] transition-colors hover:bg-black/5"
+              className="flex w-full items-center justify-between rounded-lg px-4 py-2.5 text-sm font-medium text-foreground/80 transition-colors hover:bg-muted"
             >
               Supporters
               <ChevronDown
@@ -294,7 +280,7 @@ export function Navbar() {
                   <Link
                     key={item.label}
                     href={item.href}
-                    className="block rounded-lg px-4 py-2 text-sm text-[#1A2B4A]/70 transition-colors hover:bg-black/5 hover:text-[#0B1229]"
+                    className="block rounded-lg px-4 py-2 text-sm text-foreground/60 transition-colors hover:bg-muted hover:text-foreground"
                   >
                     {item.label}
                   </Link>
@@ -304,33 +290,23 @@ export function Navbar() {
           </div>
           <Link
             href="#features"
-            className="block rounded-lg px-4 py-2.5 text-sm font-medium text-[#1A2B4A] transition-colors hover:bg-black/5"
+            className="block rounded-lg px-4 py-2.5 text-sm font-medium text-foreground/80 transition-colors hover:bg-muted"
           >
             Features
           </Link>
           <Link
             href="#about"
-            className="block rounded-lg px-4 py-2.5 text-sm font-medium text-[#1A2B4A] transition-colors hover:bg-black/5"
+            className="block rounded-lg px-4 py-2.5 text-sm font-medium text-foreground/80 transition-colors hover:bg-muted"
           >
             About Us
           </Link>
           <div className="flex gap-3 pt-4">
-            <Link
-              href="/signin"
-              className="flex-1 rounded-lg border border-[#1A2B4A]/20 px-4 py-2 text-center text-sm font-medium text-[#1A2B4A] transition-colors hover:bg-black/5"
-            >
-              Sign In
-            </Link>
-            <Link
-              href="/signup"
-              className="flex-1 rounded-lg px-4 py-2 text-center text-sm font-bold text-[#0B1229] transition-all hover:scale-[1.02] hover:brightness-110"
-              style={{
-                background: "linear-gradient(90deg, #4DD9C0 0%, #7EC8E3 100%)",
-                boxShadow: "0 0 16px rgba(77, 217, 192, 0.25)",
-              }}
-            >
-              Sign Up
-            </Link>
+            <Button variant="outline" size="sm" className="flex-1" asChild>
+              <Link href="/signin">Sign In</Link>
+            </Button>
+            <Button size="sm" className="flex-1" asChild>
+              <Link href="/signup">Sign Up</Link>
+            </Button>
           </div>
         </div>
       </div>
