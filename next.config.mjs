@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
+// GitHub Pages project sites live at https://<user>.github.io/<repo>/ — set NEXT_PUBLIC_BASE_PATH=/<repo>
+// User sites (username.github.io repo) should use NEXT_PUBLIC_BASE_PATH= (empty)
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH?.trim() || "";
+
 const nextConfig = {
   devIndicators: {
     appIsrStatus: false,
@@ -10,6 +14,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-}
+  output: "export",
+  basePath: basePath || undefined,
+};
 
 export default nextConfig
