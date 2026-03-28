@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { getRedirectResult, onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 
 export function AuthRedirectHandler() {
@@ -14,7 +14,7 @@ export function AuthRedirectHandler() {
   const [checking, setChecking] = useState(isAuthPage);
 
   useEffect(() => {
-    // If not on an auth page, immediately hide spinner and do not run auth redirect checks
+    // Only run on auth pages
     if (!isAuthPage) {
       setChecking(false);
       return;
@@ -24,30 +24,14 @@ export function AuthRedirectHandler() {
     let unsub: (() => void) | null = null;
     let cancelled = false;
 
-    const init = async () => {
+    const checkAuthStatus = async () => {
       // Wait for Firebase auth to be ready
       await auth.authStateReady();
       if (cancelled) return;
 
-      // Check for OAuth redirect result (Google/GitHub)
-      try {
-        const result = await getRedirectResult(auth);
-        if (cancelled) return;
-        
-        if (result?.user) {
-          console.log("[Auth] OAuth success, redirecting to dashboard");
-          setChecking(false);
-          router.replace("/dashboard");
-          return;
-        }
-      } catch (e) {
-        console.error("[Auth] OAuth redirect error:", e);
-      }
-
       // Check if already logged in
       if (auth.currentUser) {
-        console.log("[Auth] Already logged in, redirecting");
-        setChecking(false);
+        console.log("[Auth] Already logged in, redirecting to dashboard");
         router.replace("/dashboard");
         return;
       }
@@ -58,7 +42,6 @@ export function AuthRedirectHandler() {
         
         if (user) {
           console.log("[Auth] User signed in, redirecting to dashboard");
-          setChecking(false);
           router.replace("/dashboard");
         }
       });
@@ -66,17 +49,16 @@ export function AuthRedirectHandler() {
       setChecking(false);
     };
 
-    init();
+    checkAuthStatus();
 
     return () => {
       cancelled = true;
       unsub?.();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthPage]);
+  }, [isAuthPage, router]);
 
   // Show spinner while checking auth status (only on /signin or /signup)
-  if (checking) {
+  if (checking && isAuthPage) {
     return (
       <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#060916]">
         <div className="flex flex-col items-center gap-3">

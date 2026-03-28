@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { HomeLink } from "@/components/home-link";
 import { useState, useEffect, useRef } from "react";
-import { createUserWithEmailAndPassword, signInWithRedirect, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth";
 import { auth, googleProvider, githubProvider } from "@/lib/firebase";
 import { formatAuthError } from "@/lib/auth-errors";
 
@@ -441,7 +441,10 @@ export default function SignUpPage() {
               onClick={async () => {
                 try {
                   await auth.authStateReady();
-                  await signInWithRedirect(auth, googleProvider);
+                  const result = await signInWithPopup(auth, googleProvider);
+                  if (result?.user) {
+                    router.replace("/dashboard");
+                  }
                 } catch (err: unknown) {
                   setError(formatAuthError(err));
                 }
@@ -461,7 +464,10 @@ export default function SignUpPage() {
               onClick={async () => {
                 try {
                   await auth.authStateReady();
-                  await signInWithRedirect(auth, githubProvider);
+                  const result = await signInWithPopup(auth, githubProvider);
+                  if (result?.user) {
+                    router.replace("/dashboard");
+                  }
                 } catch (err: unknown) {
                   setError(formatAuthError(err));
                 }
