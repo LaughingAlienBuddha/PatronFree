@@ -1,0 +1,34 @@
+{
+  "name": "patronex-backend",
+  "version": "1.0.0",
+  "description": "Firebase-only backend for Patronex platform",
+  "main": "server-firebase.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server-firebase.js",
+    "dev": "nodemon server-firebase.js",
+    "build": "echo 'No build step required'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "patronex",
+    "backend",
+    "express",
+    "firebase"
+  ],
+  "author": "Patronex Team",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.0.0",
+    "express-validator": "^7.0.0",
+    "firebase-admin": "^13.7.0",
+    "helmet": "^7.0.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
