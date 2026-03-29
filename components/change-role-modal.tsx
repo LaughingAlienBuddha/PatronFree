@@ -62,31 +62,40 @@ export function ChangeRoleModal({
       return;
     }
 
-    // INSTANT: Save to localStorage, notify parent, close modal, and redirect
-    localStorage.setItem('userRole', selectedRole);
-    onRoleChanged(selectedRole);
-    onClose();
+    setIsLoading(true);
+    setError("");
 
-    // Redirect immediately - don't wait
-    const redirectPath =
-      selectedRole === "creator"
-        ? "/creator"
-        : selectedRole === "developer"
-        ? "/developer"
-        : "/dashboard";
-    
-    router.replace(redirectPath);
+    try {
+      // INSTANT: Save to localStorage, notify parent, close modal, and redirect
+      localStorage.setItem('userRole', selectedRole);
+      onRoleChanged(selectedRole);
+      onClose();
 
-    // BACKGROUND: Save to Firestore (fire and forget - no await)
-    const userRef = doc(db, "users", user.uid);
-    setDoc(
-      userRef,
-      {
-        role: selectedRole,
-        updatedAt: new Date().toISOString(),
-      },
-      { merge: true }
-    ).catch(err => console.warn("Background role save failed:", err));
+      // Redirect immediately - don't wait
+      const redirectPath =
+        selectedRole === "creator"
+          ? "/creator"
+          : selectedRole === "developer"
+          ? "/developer"
+          : "/dashboard";
+      
+      router.replace(redirectPath);
+
+      // BACKGROUND: Save to Firestore (fire and forget - no await)
+      const userRef = doc(db, "users", user.uid);
+      setDoc(
+        userRef,
+        {
+          role: selectedRole,
+          updatedAt: new Date().toISOString(),
+        },
+        { merge: true }
+      ).catch(err => console.warn("Background role save failed:", err));
+    } catch (err) {
+      setIsLoading(false);
+      setError("Failed to switch role. Please try again.");
+      console.error("Role switch error:", err);
+    }
   };
 
   return (
