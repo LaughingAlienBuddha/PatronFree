@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Image,
-  Video,
-  Code,
+  FileImage,
+  FileVideo,
+  Code2,
   BarChart3,
   Search,
   Users,
@@ -32,6 +32,9 @@ import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { Progress } from "@/components/ui/progress";
+import { useUserProfile } from "@/hooks/use-user-profile";
+import { LogoutButton } from "@/components/logout-button";
+import { auth } from "@/lib/firebase";
 import { cn } from "@/lib/utils";
 
 // Mock data for creator's posts
@@ -138,13 +141,30 @@ const itemVariants = {
 };
 
 export default function CreatorDashboardPage() {
+  const { user, loading } = useUserProfile();
   const [composerText, setComposerText] = useState("");
   const [visibility, setVisibility] = useState<"public" | "supporters">("public");
   const [hoveredPost, setHoveredPost] = useState<string | null>(null);
   const [hasPosted, setHasPosted] = useState(true);
 
+  // Get user's display name from Firebase or profile
+  const userName = user?.name || auth.currentUser?.displayName || "Creator";
+
   return (
     <div className="min-h-screen">
+      {/* Header with logout */}
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h1 className="text-3xl font-bold text-[#2D4A6E]">
+            Welcome back, {loading ? "..." : userName}!
+          </h1>
+          <p className="text-sm text-[#2D4A6E]/60 mt-1">
+            Manage your creator content and community
+          </p>
+        </div>
+        <LogoutButton variant="outline" className="rounded-xl border-[#2D4A6E]/20" />
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Main Content Column */}
         <div className="lg:col-span-8 space-y-6">
@@ -154,11 +174,6 @@ export default function CreatorDashboardPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            {/* Greeting */}
-            <h1 className="text-3xl font-bold text-[#2D4A6E] mb-4">
-              Welcome back, Aarav!
-            </h1>
-
             {/* Non-Revenue Metrics Pills */}
             <div className="flex flex-wrap gap-3 mb-6">
               <div 
@@ -228,21 +243,21 @@ export default function CreatorDashboardPage() {
                     size="icon"
                     className="h-9 w-9 rounded-xl hover:bg-[#E0F2F1] text-[#2D4A6E]/60"
                   >
-                    <Image className="w-4 h-4" />
+                    <FileImage className="w-4 h-4" />
                   </Button>
                   <Button
                     variant="ghost"
                     size="icon"
                     className="h-9 w-9 rounded-xl hover:bg-[#E0F2F1] text-[#2D4A6E]/60"
                   >
-                    <Video className="w-4 h-4" />
+                    <FileVideo className="w-4 h-4" />
                   </Button>
                   <Button
                     variant="ghost"
                     size="icon"
                     className="h-9 w-9 rounded-xl hover:bg-[#E0F2F1] text-[#2D4A6E]/60"
                   >
-                    <Code className="w-4 h-4" />
+                    <Code2 className="w-4 h-4" />
                   </Button>
                   <Button
                     variant="ghost"

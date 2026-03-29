@@ -1,5 +1,6 @@
 import { initializeApp, getApps, getApp, type FirebaseOptions } from "firebase/app";
 import { getAuth, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
+import { getFirestore, enableIndexedDbPersistence } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
 
 /** Web app keys from Firebase Console → Project settings → General → Your apps (SDK snippet). */
@@ -16,6 +17,20 @@ const firebaseConfig: FirebaseOptions = {
 // Initialize Firebase (SSR safe)
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth(app);
+const db = getFirestore(app);
+
+// Enable offline persistence for Firestore (only in browser)
+if (typeof window !== "undefined") {
+  enableIndexedDbPersistence(db).catch((err) => {
+    if (err.code === "failed-precondition") {
+      // Multiple tabs open, persistence can only be enabled in one tab at a time
+      console.warn("Firestore persistence failed: Multiple tabs open");
+    } else if (err.code === "unimplemented") {
+      // Browser doesn't support persistence
+      console.warn("Firestore persistence not supported in this browser");
+    }
+  });
+}
 
 // Analytics can throw or fail on hosts not registered in Firebase/GA; never let that break Auth.
 let analytics: ReturnType<typeof getAnalytics> | undefined;
@@ -27,8 +42,8 @@ if (typeof window !== "undefined") {
   }
 }
 
-// Export Auth & Providers
+// Export Auth, Firestore & Providers
 export const googleProvider = new GoogleAuthProvider();
 export const githubProvider = new GithubAuthProvider();
 
-export { app, auth, analytics };
+export { app, auth, db, analytics };

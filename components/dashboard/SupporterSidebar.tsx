@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Home,
+  House,
   Compass,
   Bell,
   MessageSquare,
@@ -15,7 +15,7 @@ import {
   Bookmark,
   Settings,
   ChevronRight,
-  HeartHandshake,
+  Handshake,
   TrendingUp,
   Check,
   X,
@@ -23,13 +23,18 @@ import {
   MoreHorizontal,
   Send,
   ArrowRight,
+  Sparkles,
 } from "lucide-react";
+import { ChangeRoleModal } from "@/components/change-role-modal";
+import { UserRole } from "@/components/role-selection-modal";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import { useUserProfile } from "@/hooks/use-user-profile";
+import { LogoutButton } from "@/components/logout-button";
 
 // Types
 interface NavItem {
@@ -175,18 +180,60 @@ const pulseVariants = {
 
 export function SupporterSidebar() {
   const pathname = usePathname();
+  const { user, loading } = useUserProfile();
   const [activeTab, setActiveTab] = useState("");
   const [showNotifications, setShowNotifications] = useState(false);
   const [showMessages, setShowMessages] = useState(false);
   const [selectedChat, setSelectedChat] = useState<Conversation | null>(null);
   const [showProfileDrawer, setShowProfileDrawer] = useState(false);
+  const [showChangeRoleModal, setShowChangeRoleModal] = useState(false);
+  
+  // INSTANT: Get role from localStorage for immediate display (no Firestore delay)
+  const [instantRole, setInstantRole] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('userRole') || user?.role || '';
+    }
+    return user?.role || '';
+  });
+  
+  // Update role when user changes or when localStorage updates
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const role = localStorage.getItem('userRole');
+      if (role) setInstantRole(role);
+    };
+    
+    // Listen for storage events (when role changes in other tabs)
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Also check periodically for same-tab changes
+    const interval = setInterval(() => {
+      const role = localStorage.getItem('userRole');
+      if (role && role !== instantRole) {
+        setInstantRole(role);
+      }
+    }, 100);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      clearInterval(interval);
+    };
+  }, [instantRole]);
+
+  // Get initials for avatar fallback
+  const initials = user?.name
+    ?.split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2) || "US";
 
   useEffect(() => {
     setActiveTab(pathname);
   }, [pathname]);
 
   const primaryNavItems: NavItem[] = [
-    { name: "Home", href: "/dashboard", icon: Home },
+    { name: "Home", href: "/dashboard", icon: House },
     { name: "Explore", href: "/dashboard/explore", icon: Compass },
     {
       name: "Notifications",
@@ -263,7 +310,7 @@ export function SupporterSidebar() {
             {/* Brand Logo */}
             <motion.div variants={itemVariants} className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#365486] to-[#7FC7D9] flex items-center justify-center shadow-lg shadow-[#365486]/20">
-                <HeartHandshake className="text-white w-5 h-5" />
+                <Handshake className="text-white w-5 h-5" />
               </div>
               <span className="font-bold text-xl text-[#0F1035] tracking-tight">
                 Patronex
@@ -292,11 +339,11 @@ export function SupporterSidebar() {
                     <div className="relative">
                       <Avatar className="w-14 h-14 border-2 border-white shadow-md">
                         <AvatarImage
-                          src="https://i.pravatar.cc/150?u=supporter1"
-                          alt="Priya Sharma"
+                          src={user?.profilePic || `https://i.pravatar.cc/150?u=${user?.email || 'supporter'}`}
+                          alt={user?.name || "User"}
                         />
                         <AvatarFallback className="bg-gradient-to-br from-[#7FC7D9] to-[#365486] text-white text-lg">
-                          PS
+                          {initials}
                         </AvatarFallback>
                       </Avatar>
                       {/* Animated glow ring */}
@@ -306,18 +353,33 @@ export function SupporterSidebar() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
                         <span className="font-semibold text-[#0F1035] truncate">
-                          Priya Sharma
+                          {loading ? "Loading..." : user?.name || "User"}
                         </span>
                       </div>
-                      <Badge
-                        variant="secondary"
-                        className="mt-1 bg-gradient-to-r from-rose-100 to-rose-50 text-rose-600 border-rose-200/50 text-xs font-medium"
-                      >
-                        <Heart className="w-3 h-3 mr-1 fill-rose-500 text-rose-500" />
-                        Supporter
-                      </Badge>
+                      {instantRole && (
+                        <Badge
+                          variant="secondary"
+                          className={cn(
+                            "mt-1 text-xs font-medium capitalize",
+                            instantRole === "creator" && "bg-gradient-to-r from-amber-100 to-amber-50 text-amber-600 border-amber-200/50",
+                            instantRole === "developer" && "bg-gradient-to-r from-blue-100 to-blue-50 text-blue-600 border-blue-200/50",
+                            instantRole === "supporter" && "bg-gradient-to-r from-rose-100 to-rose-50 text-rose-600 border-rose-200/50"
+                          )}
+                        >
+                          <Heart className={cn(
+                            "w-3 h-3 mr-1",
+                            instantRole === "creator" && "fill-amber-500 text-amber-500",
+                            instantRole === "developer" && "fill-blue-500 text-blue-500",
+                            instantRole === "supporter" && "fill-rose-500 text-rose-500"
+                          )} />
+                          {instantRole}
+                        </Badge>
+                      )}
                       <p className="text-xs text-[#365486]/70 mt-1">
-                        Supporting creators & developers
+                        {instantRole === "creator" && "Creating amazing content"}
+                        {instantRole === "developer" && "Building the future"}
+                        {instantRole === "supporter" && "Supporting creators & developers"}
+                        {!instantRole && "Select your role to get started"}
                       </p>
                     </div>
                   </div>
@@ -930,17 +992,29 @@ export function SupporterSidebar() {
               <div className="p-6">
                 <div className="flex items-center gap-4 mb-4">
                   <Avatar className="w-20 h-20 border-4 border-white shadow-lg">
-                    <AvatarImage src="https://i.pravatar.cc/150?u=supporter1" />
+                    <AvatarImage src={user?.profilePic || `https://i.pravatar.cc/150?u=${user?.email || 'supporter'}`} alt={user?.name || "User"} />
                     <AvatarFallback className="bg-gradient-to-br from-[#7FC7D9] to-[#365486] text-white text-2xl">
-                      PS
+                      {initials}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <h3 className="font-bold text-lg text-[#0F1035]">Priya Sharma</h3>
-                    <Badge className="mt-1 bg-gradient-to-r from-rose-100 to-rose-50 text-rose-600 border-rose-200/50">
-                      <Heart className="w-3 h-3 mr-1 fill-rose-500" />
-                      Supporter
-                    </Badge>
+                    <h3 className="font-bold text-lg text-[#0F1035]">{user?.name || "User"}</h3>
+                    {instantRole && (
+                      <Badge className={cn(
+                        "mt-1 capitalize",
+                        instantRole === "creator" && "bg-gradient-to-r from-amber-100 to-amber-50 text-amber-600 border-amber-200/50",
+                        instantRole === "developer" && "bg-gradient-to-r from-blue-100 to-blue-50 text-blue-600 border-blue-200/50",
+                        instantRole === "supporter" && "bg-gradient-to-r from-rose-100 to-rose-50 text-rose-600 border-rose-200/50"
+                      )}>
+                        <Heart className={cn(
+                          "w-3 h-3 mr-1",
+                          instantRole === "creator" && "fill-amber-500",
+                          instantRole === "developer" && "fill-blue-500",
+                          instantRole === "supporter" && "fill-rose-500"
+                        )} />
+                        {instantRole}
+                      </Badge>
+                    )}
                     <p className="text-xs text-[#365486]/70 mt-1">Member since 2024</p>
                   </div>
                 </div>
@@ -977,11 +1051,36 @@ export function SupporterSidebar() {
                     Settings
                   </Button>
                 </div>
+
+                {/* Change Role Button */}
+                <Button
+                  variant="outline"
+                  className="w-full mt-3 rounded-xl border-white/60 bg-white/30 hover:bg-white/50 text-[#365486]"
+                  onClick={() => setShowChangeRoleModal(true)}
+                >
+                  <Sparkles className="w-4 h-4 mr-2" />
+                  Change Role
+                </Button>
+
+                <Separator className="bg-white/40 my-4" />
+
+                <LogoutButton isSidebar className="rounded-xl" />
               </div>
             </motion.div>
           </>
         )}
       </AnimatePresence>
+      {/* Change Role Modal */}
+      <ChangeRoleModal
+        isOpen={showChangeRoleModal}
+        onClose={() => setShowChangeRoleModal(false)}
+        currentRole={(instantRole as UserRole) || null}
+        onRoleChanged={(newRole) => {
+          // INSTANT: Update localStorage and UI immediately
+          localStorage.setItem('userRole', newRole);
+          setInstantRole(newRole);
+        }}
+      />
     </>
   );
 }

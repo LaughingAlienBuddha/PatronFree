@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { HomeLink } from "@/components/home-link";
 import { useState, useEffect, useRef } from "react";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { signInWithPopup, signInWithEmailAndPassword, setPersistence, browserLocalPersistence } from "firebase/auth";
 import { auth, googleProvider, githubProvider } from "@/lib/firebase";
 import { formatAuthError } from "@/lib/auth-errors";
 
@@ -589,18 +589,24 @@ export default function SignInPage() {
           {/* Form */}
           <form className="fields" onSubmit={async (e) => {
             e.preventDefault();
-            if (isLoading) return;
+            if (!email || !password) {
+              setError("Please enter both email and password");
+              return;
+            }
             setIsLoading(true);
             setError("");
-
             try {
-              const res = await signInWithEmailAndPassword(auth, email, password);
-              if (res.user) {
-                router.replace("/dashboard");
-                return;
+              await setPersistence(auth, browserLocalPersistence);
+              const result = await signInWithEmailAndPassword(auth, email, password);
+              if (result?.user) {
+                // Wait for user profile to be created/synced
+                setTimeout(() => {
+                  router.replace("/dashboard");
+                }, 500);
               }
-            } catch (err: any) {
-              setError("Invalid email or password");
+            } catch (err: unknown) {
+              setError(formatAuthError(err));
+            } finally {
               setIsLoading(false);
             }
           }}>

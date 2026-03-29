@@ -13,7 +13,6 @@ import {
   LogOut,
   ChevronDown,
   ChevronRight,
-  User,
   Zap,
   Layers,
   Users,
@@ -28,6 +27,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useUserProfile } from "@/hooks/use-user-profile";
 
 type UserRole = "creator" | "developer" | "supporter";
 
@@ -133,6 +133,7 @@ interface FeedSidebarProps {
 
 export function FeedSidebar({ collapsed, setCollapsed }: FeedSidebarProps) {
   const pathname = usePathname();
+  const { user, loading } = useUserProfile();
   const [activeRole, setActiveRole] = useState<UserRole>("creator");
   const [userRoles, setUserRoles] = useState<UserRole[]>(["creator", "developer"]);
   const [profileOpen, setProfileOpen] = useState(false);
@@ -141,7 +142,13 @@ export function FeedSidebar({ collapsed, setCollapsed }: FeedSidebarProps) {
   const profileRef = useRef<HTMLDivElement>(null);
   const roleMenuRef = useRef<HTMLDivElement>(null);
 
-  const currentUser = INDIAN_USERS[0];
+  // Get initials for avatar fallback
+  const initials = user?.name
+    ?.split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2) || "US";
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
@@ -430,12 +437,12 @@ export function FeedSidebar({ collapsed, setCollapsed }: FeedSidebarProps) {
               )}
             >
               <div className="px-4 py-3 bg-gradient-to-r from-muted/50 to-transparent border-b border-border/20">
-                <p className="text-sm font-semibold text-foreground">{currentUser.name}</p>
-                <p className="text-xs text-muted-foreground">@{currentUser.name.toLowerCase().replace(" ", "")}</p>
+                <p className="text-sm font-semibold text-foreground">{user?.name || "User"}</p>
+                <p className="text-xs text-muted-foreground">@{user?.name?.toLowerCase().replace(" ", "") || "user"}</p>
               </div>
               
               <div className="p-2 space-y-0.5">
-                <ProfileMenuItem icon={User} label="View Profile" />
+                <ProfileMenuItem icon={Users} label="View Profile" />
                 <ProfileMenuItem icon={Settings} label="Account Settings" />
                 
                 {!hasMultipleRoles && (
@@ -470,13 +477,12 @@ export function FeedSidebar({ collapsed, setCollapsed }: FeedSidebarProps) {
           >
             <div className="relative shrink-0">
               <div className={cn(
-                "absolute -inset-0.5 rounded-full bg-gradient-to-r blur-sm opacity-60 group-hover:opacity-100 transition-opacity duration-300",
-                currentUser.color
+                "absolute -inset-0.5 rounded-full bg-gradient-to-r blur-sm opacity-60 group-hover:opacity-100 transition-opacity duration-300 from-amber-400/40 to-orange-400/30"
               )} />
               <Avatar className="relative h-10 w-10 border-2 border-background shadow-md">
-                <AvatarImage src="/avatar.jpg" alt={currentUser.name} />
-                <AvatarFallback className={cn("text-xs font-bold bg-gradient-to-br", currentUser.color)}>
-                  {currentUser.initials}
+                <AvatarImage src={user?.profilePic || "/avatar.jpg"} alt={user?.name || "User"} />
+                <AvatarFallback className={cn("text-xs font-bold bg-gradient-to-br from-amber-400/40 to-orange-400/30")}>
+                  {initials}
                 </AvatarFallback>
               </Avatar>
               <span className="absolute bottom-0.5 right-0.5 w-3 h-3 rounded-full bg-emerald-500 border-2 border-background shadow-sm animate-pulse-soft" />
@@ -485,7 +491,7 @@ export function FeedSidebar({ collapsed, setCollapsed }: FeedSidebarProps) {
             {!collapsed && (
               <>
                 <div className="flex-1 text-left overflow-hidden">
-                  <p className="text-sm font-semibold text-foreground truncate leading-tight">{currentUser.name}</p>
+                  <p className="text-sm font-semibold text-foreground truncate leading-tight">{user?.name || "User"}</p>
                   <div className="flex items-center gap-1.5 mt-0.5">
                     <span className={cn(
                       "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium",

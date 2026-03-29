@@ -3,38 +3,34 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { 
-  LayoutDashboard, 
-  BookOpen, 
-  Users, 
-  LineChart, 
-  CreditCard, 
-  Megaphone, 
-  MessageSquare, 
-  Bell, 
-  Settings,
-  Menu,
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight
-} from "lucide-react";
+import { Users, MessageSquare, Bell } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useUserProfile } from "@/hooks/use-user-profile";
 
 const navItems = [
-  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Library", href: "/dashboard/library", icon: BookOpen },
-  { name: "Audience", href: "/dashboard/audience", icon: Users },
-  { name: "Insights", href: "/dashboard/insights", icon: LineChart },
-  { name: "Payouts", href: "/dashboard/payouts", icon: CreditCard },
-  { name: "Promotions", href: "/dashboard/promotions", icon: Megaphone },
-  { name: "Chats", href: "/dashboard/chats", icon: MessageSquare },
-  { name: "Notifications", href: "/dashboard/notifications", icon: Bell },
-  { name: "Settings", href: "/dashboard/settings", icon: Settings },
+  { name: "Dashboard", href: "/dashboard" },
+  { name: "Library", href: "/dashboard/library" },
+  { name: "Audience", href: "/dashboard/audience" },
+  { name: "Insights", href: "/dashboard/insights" },
+  { name: "Payouts", href: "/dashboard/payouts" },
+  { name: "Promotions", href: "/dashboard/promotions" },
+  { name: "Chats", href: "/dashboard/chats" },
+  { name: "Notifications", href: "/dashboard/notifications" },
+  { name: "Settings", href: "/dashboard/settings" },
 ];
 
 export function Sidebar({ collapsed, setCollapsed }: { collapsed: boolean; setCollapsed: (c: boolean) => void }) {
   const pathname = usePathname();
+  const { user, loading } = useUserProfile();
+  
+  // Get initials for avatar fallback
+  const initials = user?.name
+    ?.split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2) || "US";
 
   return (
     <aside 
@@ -64,7 +60,7 @@ export function Sidebar({ collapsed, setCollapsed }: { collapsed: boolean; setCo
             collapsed && "mx-auto mt-2 absolute -right-3 top-4 bg-background border shadow-sm rounded-full"
           )}
         >
-          {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={18} />}
+          {collapsed ? "→" : "←"}
         </button>
       </div>
 
@@ -82,13 +78,6 @@ export function Sidebar({ collapsed, setCollapsed }: { collapsed: boolean; setCo
                   : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
               )}
             >
-              <item.icon 
-                size={20} 
-                className={cn(
-                  "transition-all duration-200", 
-                  isActive ? "text-primary scale-110" : "group-hover:scale-110 group-hover:text-foreground"
-                )} 
-              />
               {!collapsed && (
                 <span className="truncate">{item.name}</span>
               )}
@@ -103,16 +92,16 @@ export function Sidebar({ collapsed, setCollapsed }: { collapsed: boolean; setCo
       <div className="p-4 border-t border-border/40 bg-background/50">
         <div className={cn("flex items-center gap-3", collapsed && "justify-center")}>
           <Avatar className="h-9 w-9 border border-border/50 ring-2 ring-transparent transition-all hover:ring-primary/20 cursor-pointer">
-            <AvatarImage src="/avatar.jpg" alt="User" />
-            <AvatarFallback className="bg-primary/10 text-primary text-xs">DX</AvatarFallback>
+            <AvatarImage src={user?.profilePic || "/avatar.jpg"} alt={user?.name || "User"} />
+            <AvatarFallback className="bg-primary/10 text-primary text-xs">{initials}</AvatarFallback>
           </Avatar>
           {!collapsed && (
             <div className="flex-1 flex items-center justify-between overflow-hidden cursor-pointer hover:bg-muted/50 p-1.5 -ml-1.5 rounded-lg transition-colors">
               <div className="truncate">
-                <p className="text-sm font-medium text-foreground truncate">DevX Team</p>
-                <p className="text-xs text-muted-foreground truncate">Free Plan</p>
+                <p className="text-sm font-medium text-foreground truncate">{loading ? "Loading..." : user?.name || "User"}</p>
+                <p className="text-xs text-muted-foreground truncate">{user?.email || "Free Plan"}</p>
               </div>
-              <ChevronDown size={14} className="text-muted-foreground shrink-0" />
+              <span className="text-muted-foreground shrink-0">▼</span>
             </div>
           )}
         </div>

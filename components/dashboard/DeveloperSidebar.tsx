@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -26,6 +26,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import { useUserProfile } from "@/hooks/use-user-profile";
+import { auth } from "@/lib/firebase";
 import { cn } from "@/lib/utils";
 
 const primaryNavItems = [
@@ -101,9 +103,52 @@ interface DeveloperSidebarProps {
 
 export function DeveloperSidebar({ className }: DeveloperSidebarProps) {
   const pathname = usePathname();
+  const { user, loading } = useUserProfile();
   const [activeTab, setActiveTab] = useState<string>("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activePanel, setActivePanel] = useState<string | null>(null);
+
+  // INSTANT: Get role from localStorage for immediate display (no Firestore delay)
+  const [instantRole, setInstantRole] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('userRole') || user?.role || '';
+    }
+    return user?.role || '';
+  });
+  
+  // Update role when localStorage updates
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const role = localStorage.getItem('userRole');
+      if (role) setInstantRole(role);
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    
+    const interval = setInterval(() => {
+      const role = localStorage.getItem('userRole');
+      if (role && role !== instantRole) {
+        setInstantRole(role);
+      }
+    }, 100);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      clearInterval(interval);
+    };
+  }, [instantRole]);
+
+  // Get user's display name from Firebase or profile
+  const userName = user?.name || auth.currentUser?.displayName || "Developer";
+  const userAvatar = user?.profilePic || auth.currentUser?.photoURL || undefined;
+  
+  // Get initials for avatar fallback
+  const initials = userName
+    ?.split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2) || "DV";
 
   const isActive = (href: string) => pathname === href;
 
@@ -165,28 +210,33 @@ export function DeveloperSidebar({ className }: DeveloperSidebarProps) {
               className="flex items-center gap-3"
             >
               <Avatar className="w-12 h-12 border-2 border-[#80CBC4] ring-2 ring-[#80CBC4]/20 shadow-md">
-                <AvatarImage src="https://i.pravatar.cc/150?u=ananya" />
+                <AvatarImage src={userAvatar} />
                 <AvatarFallback className="bg-[#2D4A6E] text-white font-semibold">
-                  AS
+                  {loading ? "..." : initials}
                 </AvatarFallback>
               </Avatar>
               <div className="flex-1 min-w-0">
                 <h2 className="text-base font-bold text-[#2D4A6E] truncate">
-                  Ananya Sharma
+                  {loading ? "..." : userName}
                 </h2>
-                <div className="flex items-center gap-2">
+                {instantRole && (
                   <Badge
-                    className="px-2 py-0.5 text-xs font-medium text-white border-none shadow-sm"
-                    style={{
-                      backgroundColor: "#80CBC4",
-                      borderRadius: "6px",
-                    }}
+                    className={cn(
+                      "px-2 py-0.5 text-xs font-medium capitalize border-none shadow-sm",
+                      instantRole === "creator" && "bg-amber-500 text-white",
+                      instantRole === "developer" && "bg-blue-500 text-white",
+                      instantRole === "supporter" && "bg-rose-500 text-white"
+                    )}
+                    style={{ borderRadius: "6px" }}
                   >
-                    Developer
+                    {instantRole}
                   </Badge>
-                </div>
+                )}
                 <p className="text-xs text-[#2D4A6E]/50 mt-1 truncate">
-                  Building open-source tools
+                  {instantRole === "creator" && "Creating amazing content"}
+                  {instantRole === "developer" && "Building the future"}
+                  {instantRole === "supporter" && "Supporting creators"}
+                  {!instantRole && "Select your role"}
                 </p>
               </div>
             </motion.div>
