@@ -1,6 +1,7 @@
 // hooks/use-user-profile.ts
 import { useEffect, useState } from "react";
-import { auth } from "@/lib/firebase";
+import { auth, db } from "@/lib/firebase";
+import { doc, getDoc } from "firebase/firestore";
 import { apiCall } from "@/lib/api-client";
 
 export interface UserProfile {
@@ -21,42 +22,68 @@ export function useUserProfile() {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (firebaseUser) => {
+      if (!firebaseUser) {
+        setUser(null);
+        setLoading(false);
+        return;
+      }
+
+      // INSTANT: Set user from Firebase Auth immediately (no waiting)
+      setUser({
+        id: firebaseUser.uid,
+        name: firebaseUser.displayName || "User",
+        email: firebaseUser.email || "",
+        profilePic: firebaseUser.photoURL,
+      });
+      setLoading(false);
+
+      // BACKGROUND: Fetch additional data in parallel (Firestore + Backend)
       try {
-        setLoading(true);
-        setError(null);
+        const [firestoreResult, backendResult] = await Promise.allSettled([
+          // Firestore role fetch
+          (async () => {
+            try {
+              const userRef = doc(db, "users", firebaseUser.uid);
+              const userDoc = await getDoc(userRef);
+              return userDoc.exists() ? userDoc.data() : null;
+            } catch {
+              return null;
+            }
+          })(),
+          // Backend profile fetch with 1.5s timeout
+          (async () => {
+            try {
+              const controller = new AbortController();
+              const timeoutId = setTimeout(() => controller.abort(), 1500);
+              const response = await apiCall<UserProfile>("/profile", { signal: controller.signal });
+              clearTimeout(timeoutId);
+              return response.success ? response.data : null;
+            } catch {
+              return null;
+            }
+          })(),
+        ]);
 
-        if (!firebaseUser) {
-          setUser(null);
-          return;
-        }
+        // Merge results with Firebase Auth data
+        const firestoreData = firestoreResult.status === "fulfilled" ? firestoreResult.value : null;
+        const backendData = backendResult.status === "fulfilled" ? backendResult.value : null;
 
-        // Fetch full user profile from backend
-        const response = await apiCall<UserProfile>("/profile");
-        
-        if (response.success && response.data) {
-          setUser(response.data);
-        } else {
-          // Fallback to Firebase user data if backend doesn't have profile yet
-          setUser({
-            id: firebaseUser.uid,
-            name: firebaseUser.displayName || "User",
-            email: firebaseUser.email || "",
-            profilePic: firebaseUser.photoURL,
-          });
+        // Only update if we got additional data
+        if (firestoreData || backendData) {
+          setUser((current) => ({
+            ...current!,
+            name: backendData?.name || current?.name || firebaseUser.displayName || "User",
+            email: backendData?.email || current?.email || firebaseUser.email || "",
+            profilePic: backendData?.profilePic || current?.profilePic || firebaseUser.photoURL,
+            username: backendData?.username,
+            bio: backendData?.bio,
+            provider: backendData?.provider,
+            role: firestoreData?.role || backendData?.role || current?.role,
+          }));
         }
       } catch (err) {
-        console.error("Error fetching user profile:", err);
-        // Fallback to Firebase data
-        if (firebaseUser) {
-          setUser({
-            id: firebaseUser.uid,
-            name: firebaseUser.displayName || "User",
-            email: firebaseUser.email || "",
-            profilePic: firebaseUser.photoURL,
-          });
-        }
-      } finally {
-        setLoading(false);
+        // Silent fail - we already have Firebase Auth data showing
+        console.warn("Background profile fetch failed, using Firebase data");
       }
     });
 

@@ -31,6 +31,9 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Progress } from "@/components/ui/progress";
+import { useUserProfile } from "@/hooks/use-user-profile";
+import { LogoutButton } from "@/components/logout-button";
+import { auth } from "@/lib/firebase";
 import { cn } from "@/lib/utils";
 
 // Mock project updates
@@ -126,12 +129,30 @@ const itemVariants = {
 };
 
 export default function DeveloperDashboardPage() {
+  const { user, loading } = useUserProfile();
   const [changelogText, setChangelogText] = useState("");
   const [selectedRepo, setSelectedRepo] = useState(repos[0]);
   const [hoveredPost, setHoveredPost] = useState<string | null>(null);
 
+  // Get user's display name from Firebase or profile
+  const userName = user?.name || auth.currentUser?.displayName || "Developer";
+
   return (
     <div className="min-h-screen">
+      {/* Header with logout */}
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h1 className="text-3xl font-bold text-[#2D4A6E] flex items-center gap-2">
+            <Terminal className="w-7 h-7 text-[#80CBC4]" />
+            Systems check complete, {loading ? "..." : userName}.
+          </h1>
+          <p className="text-sm text-[#2D4A6E]/60 mt-1">
+            Manage your projects and engage with sponsors
+          </p>
+        </div>
+        <LogoutButton variant="outline" className="rounded-xl border-[#2D4A6E]/20" />
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Main Content Column */}
         <div className="lg:col-span-8 space-y-6">
@@ -141,11 +162,6 @@ export default function DeveloperDashboardPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            {/* Dev-Friendly Greeting */}
-            <h1 className="text-3xl font-bold text-[#2D4A6E] mb-4 flex items-center gap-2">
-              <Terminal className="w-7 h-7 text-[#80CBC4]" />
-              Systems check complete, Ananya.
-            </h1>
 
             {/* Build Status Pills */}
             <div className="flex flex-wrap gap-3 mb-6">

@@ -5,6 +5,8 @@ import { CreatorSpotlightCard, CreatorData } from "@/components/feed/CreatorSpot
 import { SearchSpotlight } from "@/components/feed/SearchSpotlight";
 import { FeedFilterChips } from "@/components/feed/FeedFilterChips";
 import { FeedSkeleton } from "@/components/feed/FeedSkeleton";
+import { RoleSelectionModal, UserRole, getUserRole } from "@/components/role-selection-modal";
+import { auth } from "@/lib/firebase";
 import { Search, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -187,12 +189,28 @@ export default function FeedPage() {
   const [activeFilter, setActiveFilter] = useState("all");
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showRoleModal, setShowRoleModal] = useState(false);
+  const [userRole, setUserRole] = useState<UserRole | null>(null);
+  const [authReady, setAuthReady] = useState(false);
 
-  // Simulate loading
+  // Instant role check - no waiting
+  useEffect(() => {
+    // Check localStorage first (instant, no network delay)
+    const cachedRole = localStorage.getItem('userRole') as UserRole | null;
+    if (cachedRole) {
+      setUserRole(cachedRole);
+      return;
+    }
+
+    // No cached role - show modal immediately
+    setShowRoleModal(true);
+  }, []);
+
+  // Shorter loading simulation (500ms instead of 1200ms)
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1200);
+    }, 500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -235,6 +253,12 @@ export default function FeedPage() {
 
   return (
     <div className="min-h-screen">
+      {/* Role Selection Modal for first-time users */}
+      <RoleSelectionModal
+        isOpen={showRoleModal}
+        onClose={() => setShowRoleModal(false)}
+      />
+
       {/* Search Spotlight Modal */}
       <SearchSpotlight
         creators={CREATORS}

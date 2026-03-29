@@ -12,49 +12,94 @@ export interface ApiResponse<T = any> {
   errors?: any[];
 }
 
+// Helper to delay between retries
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 /**
- * Generic API call function with Firebase ID Token handling
+ * Generic API call function with Firebase ID Token handling and retry logic
  * Automatically gets fresh token from Firebase and adds to Authorization header
  */
 export async function apiCall<T = any>(
   endpoint: string,
-  options: RequestInit = {}
+  options: RequestInit = {},
+  retries = 2
 ): Promise<ApiResponse<T>> {
-  try {
-    // Get current user from Firebase
-    const user = auth.currentUser;
-    if (!user) {
-      throw new Error('Not authenticated. Please login first.');
+  let lastError: any;
+
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      // Get current user from Firebase
+      const user = auth.currentUser;
+      if (!user) {
+        return {
+          success: false,
+          message: 'Not authenticated. Please login first.',
+        };
+      }
+
+      // Get fresh Firebase ID token
+      const idToken = await user.getIdToken(attempt > 0); // Force refresh on retry
+
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${idToken}`,
+      };
+
+      if (options.headers && typeof options.headers === 'object') {
+        Object.assign(headers, options.headers);
+      }
+
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        ...options,
+        headers,
+        signal: options.signal,
+      });
+
+      // Handle non-OK responses
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ message: `HTTP ${response.status}` }));
+        throw new Error(errorData.message || `API Error: ${response.status}`);
+      }
+
+      const data: ApiResponse<T> = await response.json();
+      return data;
+
+    } catch (error: any) {
+      lastError = error;
+      
+      // Handle abort errors gracefully - don't retry, just return
+      if (error.name === 'AbortError' || error.message?.includes('aborted')) {
+        return {
+          success: false,
+          message: 'Request timed out',
+        };
+      }
+      
+      console.warn(`⚠️ API attempt ${attempt + 1}/${retries + 1} failed [${endpoint}]:`, error.message);
+
+      // Don't retry on authentication errors
+      if (error.message?.includes('Not authenticated')) {
+        return {
+          success: false,
+          message: error.message,
+        };
+      }
+
+      // If we have retries left, wait before trying again
+      if (attempt < retries) {
+        const waitTime = Math.min(1000 * Math.pow(2, attempt), 5000); // Exponential backoff, max 5s
+        console.log(`⏳ Retrying in ${waitTime}ms...`);
+        await delay(waitTime);
+      }
     }
-
-    // Get fresh Firebase ID token
-    const idToken = await user.getIdToken(true);
-
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${idToken}`,
-    };
-
-    if (options.headers && typeof options.headers === 'object') {
-      Object.assign(headers, options.headers);
-    }
-
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-      ...options,
-      headers,
-    });
-
-    const data: ApiResponse<T> = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.message || `API Error: ${response.status}`);
-    }
-
-    return data;
-  } catch (error: any) {
-    console.error(`❌ API Error [${endpoint}]:`, error);
-    throw error;
   }
+
+  // All retries exhausted
+  console.error(`❌ API Error [${endpoint}]:`, lastError);
+  return {
+    success: false,
+    message: lastError?.message || 'Failed to connect to server. Please check your internet connection.',
+  };
 }
 
 /**
@@ -70,7 +115,10 @@ export async function uploadFile<T = any>(
     // Get current user from Firebase
     const user = auth.currentUser;
     if (!user) {
-      throw new Error('Not authenticated. Please login first.');
+      return {
+        success: false,
+        message: 'Not authenticated. Please login first.',
+      };
     }
 
     // Get fresh Firebase ID token
@@ -88,16 +136,20 @@ export async function uploadFile<T = any>(
       }),
     });
 
-    const data: ApiResponse<T> = await response.json();
-
     if (!response.ok) {
-      throw new Error(data.message || 'File upload failed');
+      const errorData = await response.json().catch(() => ({ message: `HTTP ${response.status}` }));
+      throw new Error(errorData.message || 'File upload failed');
     }
 
+    const data: ApiResponse<T> = await response.json();
     return data;
+
   } catch (error: any) {
     console.error(`❌ Upload Error [${endpoint}]:`, error);
-    throw error;
+    return {
+      success: false,
+      message: error?.message || 'Failed to upload file. Please try again.',
+    };
   }
 }
 

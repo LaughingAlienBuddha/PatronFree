@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Home,
+  House,
   Compass,
   Bell,
   MessageSquare,
@@ -15,7 +15,7 @@ import {
   Bookmark,
   Settings,
   ChevronRight,
-  HeartHandshake,
+  Handshake,
   TrendingUp,
   Check,
   X,
@@ -23,7 +23,10 @@ import {
   MoreHorizontal,
   Send,
   ArrowRight,
+  Sparkles,
 } from "lucide-react";
+import { ChangeRoleModal } from "@/components/change-role-modal";
+import { UserRole } from "@/components/role-selection-modal";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -31,6 +34,7 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { useUserProfile } from "@/hooks/use-user-profile";
+import { LogoutButton } from "@/components/logout-button";
 
 // Types
 interface NavItem {
@@ -182,6 +186,7 @@ export function SupporterSidebar() {
   const [showMessages, setShowMessages] = useState(false);
   const [selectedChat, setSelectedChat] = useState<Conversation | null>(null);
   const [showProfileDrawer, setShowProfileDrawer] = useState(false);
+  const [showChangeRoleModal, setShowChangeRoleModal] = useState(false);
 
   // Get initials for avatar fallback
   const initials = user?.name
@@ -196,7 +201,7 @@ export function SupporterSidebar() {
   }, [pathname]);
 
   const primaryNavItems: NavItem[] = [
-    { name: "Home", href: "/dashboard", icon: Home },
+    { name: "Home", href: "/dashboard", icon: House },
     { name: "Explore", href: "/dashboard/explore", icon: Compass },
     {
       name: "Notifications",
@@ -273,7 +278,7 @@ export function SupporterSidebar() {
             {/* Brand Logo */}
             <motion.div variants={itemVariants} className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#365486] to-[#7FC7D9] flex items-center justify-center shadow-lg shadow-[#365486]/20">
-                <HeartHandshake className="text-white w-5 h-5" />
+                <Handshake className="text-white w-5 h-5" />
               </div>
               <span className="font-bold text-xl text-[#0F1035] tracking-tight">
                 Patronex
@@ -319,15 +324,30 @@ export function SupporterSidebar() {
                           {loading ? "Loading..." : user?.name || "User"}
                         </span>
                       </div>
-                      <Badge
-                        variant="secondary"
-                        className="mt-1 bg-gradient-to-r from-rose-100 to-rose-50 text-rose-600 border-rose-200/50 text-xs font-medium"
-                      >
-                        <Heart className="w-3 h-3 mr-1 fill-rose-500 text-rose-500" />
-                        Supporter
-                      </Badge>
+                      {user?.role && (
+                        <Badge
+                          variant="secondary"
+                          className={cn(
+                            "mt-1 text-xs font-medium capitalize",
+                            user.role === "creator" && "bg-gradient-to-r from-amber-100 to-amber-50 text-amber-600 border-amber-200/50",
+                            user.role === "developer" && "bg-gradient-to-r from-blue-100 to-blue-50 text-blue-600 border-blue-200/50",
+                            user.role === "supporter" && "bg-gradient-to-r from-rose-100 to-rose-50 text-rose-600 border-rose-200/50"
+                          )}
+                        >
+                          <Heart className={cn(
+                            "w-3 h-3 mr-1",
+                            user.role === "creator" && "fill-amber-500 text-amber-500",
+                            user.role === "developer" && "fill-blue-500 text-blue-500",
+                            user.role === "supporter" && "fill-rose-500 text-rose-500"
+                          )} />
+                          {user.role}
+                        </Badge>
+                      )}
                       <p className="text-xs text-[#365486]/70 mt-1">
-                        Supporting creators & developers
+                        {user?.role === "creator" && "Creating amazing content"}
+                        {user?.role === "developer" && "Building the future"}
+                        {user?.role === "supporter" && "Supporting creators & developers"}
+                        {!user?.role && "Select your role to get started"}
                       </p>
                     </div>
                   </div>
@@ -947,10 +967,22 @@ export function SupporterSidebar() {
                   </Avatar>
                   <div>
                     <h3 className="font-bold text-lg text-[#0F1035]">{user?.name || "User"}</h3>
-                    <Badge className="mt-1 bg-gradient-to-r from-rose-100 to-rose-50 text-rose-600 border-rose-200/50">
-                      <Heart className="w-3 h-3 mr-1 fill-rose-500" />
-                      Supporter
-                    </Badge>
+                    {user?.role && (
+                      <Badge className={cn(
+                        "mt-1 capitalize",
+                        user.role === "creator" && "bg-gradient-to-r from-amber-100 to-amber-50 text-amber-600 border-amber-200/50",
+                        user.role === "developer" && "bg-gradient-to-r from-blue-100 to-blue-50 text-blue-600 border-blue-200/50",
+                        user.role === "supporter" && "bg-gradient-to-r from-rose-100 to-rose-50 text-rose-600 border-rose-200/50"
+                      )}>
+                        <Heart className={cn(
+                          "w-3 h-3 mr-1",
+                          user.role === "creator" && "fill-amber-500",
+                          user.role === "developer" && "fill-blue-500",
+                          user.role === "supporter" && "fill-rose-500"
+                        )} />
+                        {user.role}
+                      </Badge>
+                    )}
                     <p className="text-xs text-[#365486]/70 mt-1">Member since 2024</p>
                   </div>
                 </div>
@@ -987,11 +1019,35 @@ export function SupporterSidebar() {
                     Settings
                   </Button>
                 </div>
+
+                {/* Change Role Button */}
+                <Button
+                  variant="outline"
+                  className="w-full mt-3 rounded-xl border-white/60 bg-white/30 hover:bg-white/50 text-[#365486]"
+                  onClick={() => setShowChangeRoleModal(true)}
+                >
+                  <Sparkles className="w-4 h-4 mr-2" />
+                  Change Role
+                </Button>
+
+                <Separator className="bg-white/40 my-4" />
+
+                <LogoutButton isSidebar className="rounded-xl" />
               </div>
             </motion.div>
           </>
         )}
       </AnimatePresence>
+      {/* Change Role Modal */}
+      <ChangeRoleModal
+        isOpen={showChangeRoleModal}
+        onClose={() => setShowChangeRoleModal(false)}
+        currentRole={(user?.role as UserRole) || null}
+        onRoleChanged={(newRole) => {
+          // Role changed - could redirect to appropriate page here
+          console.log("Role changed to:", newRole);
+        }}
+      />
     </>
   );
 }

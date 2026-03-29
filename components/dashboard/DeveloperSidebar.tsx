@@ -26,6 +26,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import { useUserProfile } from "@/hooks/use-user-profile";
+import { auth } from "@/lib/firebase";
 import { cn } from "@/lib/utils";
 
 const primaryNavItems = [
@@ -101,9 +103,22 @@ interface DeveloperSidebarProps {
 
 export function DeveloperSidebar({ className }: DeveloperSidebarProps) {
   const pathname = usePathname();
+  const { user, loading } = useUserProfile();
   const [activeTab, setActiveTab] = useState<string>("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activePanel, setActivePanel] = useState<string | null>(null);
+
+  // Get user's display name from Firebase or profile
+  const userName = user?.name || auth.currentUser?.displayName || "Developer";
+  const userAvatar = user?.profilePic || auth.currentUser?.photoURL || undefined;
+  
+  // Get initials for avatar fallback
+  const initials = userName
+    ?.split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2) || "DV";
 
   const isActive = (href: string) => pathname === href;
 
@@ -165,14 +180,14 @@ export function DeveloperSidebar({ className }: DeveloperSidebarProps) {
               className="flex items-center gap-3"
             >
               <Avatar className="w-12 h-12 border-2 border-[#80CBC4] ring-2 ring-[#80CBC4]/20 shadow-md">
-                <AvatarImage src="https://i.pravatar.cc/150?u=ananya" />
+                <AvatarImage src={userAvatar} />
                 <AvatarFallback className="bg-[#2D4A6E] text-white font-semibold">
-                  AS
+                  {loading ? "..." : initials}
                 </AvatarFallback>
               </Avatar>
               <div className="flex-1 min-w-0">
                 <h2 className="text-base font-bold text-[#2D4A6E] truncate">
-                  Ananya Sharma
+                  {loading ? "..." : userName}
                 </h2>
                 <div className="flex items-center gap-2">
                   <Badge
