@@ -6,7 +6,7 @@ Patronex is a **GitHub-first, community-powered platform** helping open-source m
 
 ---
 
-## ✨ What Makes Patronex Different
+##  What Makes Patronex Different
 
 | Others | Patronex |
 |--------|----------|
@@ -17,7 +17,7 @@ Patronex is a **GitHub-first, community-powered platform** helping open-source m
 
 ---
 
-## 🚀 Live Features
+## Live Features
 
 ### **Repo-First Creator Pages**
 Beautiful public profiles showcasing project bios, repo links, funding goals, and contribution metrics (PRs merged, releases, issues closed). Visitors immediately understand what their membership supports.
@@ -76,7 +76,7 @@ GitHub account verification with reputation scoring (account age + contributions
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |-------|------------|
@@ -91,7 +91,7 @@ GitHub account verification with reputation scoring (account age + contributions
 
 ---
 
-## 📦 Complete Project Structure
+## Complete Project Structure
 
 ```
 app/
@@ -249,7 +249,7 @@ public/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ```bash
 # Install dependencies
@@ -264,7 +264,7 @@ pnpm dev
 Open [http://localhost:3000](http://localhost:3000) to see the magic ✨
 ---
 
-## 📊 Data & Reporting
+## Data & Reporting
 
 - **Monthly reports** — automated expense and revenue summaries
 - **One-click exports** — CSV/JSON of transactions, sponsors, and distributions
@@ -272,7 +272,7 @@ Open [http://localhost:3000](http://localhost:3000) to see the magic ✨
 
 ---
 
-## 🔮 Roadmap
+## Roadmap
 
 - [x] Landing page with modern animations (Framer Motion)
 - [x] Multi-role dashboard (Creator / Developer / Supporter)
@@ -288,19 +288,19 @@ Open [http://localhost:3000](http://localhost:3000) to see the magic ✨
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Patronex is open source and built by the community, for the community. PRs welcome!
 
 ---
 
-## 📄 License
+## License
 
 MIT License — use it, fork it, make it yours.
 
 ---
 
-## 🌟 Vision
+## Vision
 
 > *Make recurring sponsorship the default for open-source projects.*
 
@@ -308,4 +308,4 @@ By combining **repo-first discovery**, **smooth membership UX**, **practical ant
 
 ---
 
-**⭐ Star this repo if you believe open-source deserves better funding tools!**
+** Star this repo if you believe open-source deserves better funding tools!**
